@@ -335,13 +335,13 @@ class TableData extends React.Component {
                                                     <TableCell align="center" className="IconContainers">
                                                         {data[index] ?
                                                             data[index].isActive ?
-                                                                <i className="fas fa-times-circle" onClick={() => { deActiveAction(data[index], index) }} /> :
-                                                                <i className="fas fa-check-circle" onClick={() => { ActiveAction(data[index], index) }} />
+                                                                <i className="fas fa-times-circle" onClick={() => { deActiveAction(data[index], index) }} data-toggle="tooltip" data-placement="top" title="deaActivate" /> :
+                                                                <i className="fas fa-check-circle" onClick={() => { ActiveAction(data[index], index) }} data-toggle="tooltip" data-placement="top" title="Activate" />
                                                             : null
                                                         }
-                                                        <i className="fas fa-trash-alt" onClick={() => { this.deleteAction(data[index], index) }} />
-                                                        <i className="far fa-list-alt" onClick={() => { handleDetails(data[index], index) }} />
-                                                        <i className="fas fa-edit" onClick={() => { handleEdit(data[index], index) }} />
+                                                        <i className="fas fa-trash-alt" onClick={() => { this.deleteAction(data[index], index) }} data-toggle="tooltip" data-placement="top" title="Delete" />
+                                                        <i className="far fa-list-alt" onClick={() => { handleDetails(data[index], index) }} data-toggle="tooltip" data-placement="top" title="Show Details" />
+                                                        <i className="fas fa-edit" onClick={() => { handleEdit(data[index], index) }} data-toggle="tooltip" data-placement="top" title="Edit" />
                                                     </TableCell>
                                                 </TableRow>
                                             );
