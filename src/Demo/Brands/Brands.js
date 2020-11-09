@@ -624,26 +624,22 @@ class Brands extends React.Component {
                     {showDetails && this.DetailsForm()}
                     <Row>
                         <Col md="12">
-                            {
-                                Brands && Brands.length > 0 ?
-                                    <TableData
-                                        headCells={this.headCells}
-                                        data={Brands}
-                                        DataShowPerTable={this.DataShowPerTable}
-                                        handleDelete={(val, index) => { this.delete(val, index) }}
-                                        handleDetails={(val, index) => { this.Details(val, index) }}
-                                        handleEdit={(val, index) => { this.Edit(val, index) }}
-                                        totalPages={1}
-                                        Title={"Brands"}
-                                        handleAdd={() => { this.Add() }}
-                                        ActiveAction={(val, index) => { this.ActiveBranch(val, index) }}
-                                        deActiveAction={(val, index) => { this.deActiveBranch(val, index) }}
 
-                                    />
-                                    :
-                                    <p className="noResult">No Brands Found</p>
+                            <TableData
+                                headCells={this.headCells}
+                                data={Brands}
+                                DataShowPerTable={this.DataShowPerTable}
+                                handleDelete={(val, index) => { this.delete(val, index) }}
+                                handleDetails={(val, index) => { this.Details(val, index) }}
+                                handleEdit={(val, index) => { this.Edit(val, index) }}
+                                totalPages={1}
+                                Title={"Brands"}
+                                handleAdd={() => { this.Add() }}
+                                ActiveAction={(val, index) => { this.ActiveBranch(val, index) }}
+                                deActiveAction={(val, index) => { this.deActiveBranch(val, index) }}
+                            />
 
-                            }
+
 
                         </Col>
                     </Row>
