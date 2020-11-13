@@ -29,7 +29,7 @@ class TableData extends React.Component {
             orderBy: '',
             selected: [],
             page: 0,
-            rowsPerPage: 5,
+            rowsPerPage: 10,
             rows: [],
             searchVal: null,
             originalRows: [],
@@ -186,7 +186,7 @@ class TableData extends React.Component {
     }
 
     EnhancedTable() {
-        const { handleDelete, handleDetails, handleEdit, totalPages, Title, handleAdd, data, DataShowPerTable, ActiveAction, deActiveAction } = this.props;
+        const { handleDelete, handleDetails, handleEdit, showDelete, Title, handleAdd, data, showActiveIcon, ActiveAction, deActiveAction, noResultMSG } = this.props;
         const { rows } = this.state;
         console.log(data);
         const classes = {
@@ -244,62 +244,60 @@ class TableData extends React.Component {
                         <Col md="6">
                             <div className="btnContainer">
                                 {handleAdd && <Button variant="contained" onClick={() => handleAdd()}> <i className="fas fa-plus" /> New Record</Button>}
-                                <Dropdown>
+                                {/* <Dropdown>
                                     <Dropdown.Toggle variant="success" id="dropdown-basic"><i className="fa fa-download" /><p className="ExportTxt">Export Table</p></Dropdown.Toggle>
                                     <Dropdown.Menu>
                                         <Dropdown.Item ><i className="fa fa-file-excel" /> Excel</Dropdown.Item>
                                         <Dropdown.Item ><i className="fa fa-file-pdf" />PDF</Dropdown.Item>
                                     </Dropdown.Menu>
-                                </Dropdown>
+                                </Dropdown> */}
                             </div>
                         </Col>
                         <hr />
-                        {
-                            rows && rows.length > 0 &&
-                            <Col md="12" className="SpecRow">
-                                <div id="main-search" className={'main-search'}>
-                                    <Row>
-                                        <Col md="2">
-                                            <p className="SearchTxt">Search:</p>
-                                        </Col>
-                                        <Col md="10">
-                                            <Row>
-                                                <Col md="8">
-                                                    <div className="input-group">
-                                                        <input type="text" id="m-search" className="form-control" style={{ width: this.state.searchString }} onChange={(val) => this.search(val.target.value)} />
-                                                        <a href={""} className="input-group-append search-close" onClick={this.searchOffHandler}>
-                                                            <i className="feather icon-x input-group-text" />
-                                                        </a>
-                                                        <span className="input-group-append search-btn btn btn-primary" onClick={this.searchOnHandler}>
-                                                            <i className="feather icon-search input-group-text" />
-                                                        </span>
-                                                    </div>
-                                                </Col>
-                                                <Col md="4">
-                                                    <FormControl className={classes.formControl}>
-                                                        <InputLabel id="demo-simple-select-label">Fields</InputLabel>
-                                                        <Select
-                                                            labelId="demo-simple-select-label"
-                                                            id="demo-simple-select"
-                                                            value={this.state.selectedFilter}
-                                                            onChange={(val) => { this.setState({ selectedFilter: val.target.value }) }}
-                                                        >
-                                                            {this.headCells &&
-                                                                this.headCells.map((Item) => {
-                                                                    return <MenuItem value={Item.id}>{Item.id}</MenuItem>
-                                                                })
+                        <Col md="12" className="SpecRow">
+                            <div id="main-search" className={'main-search'}>
+                                <Row>
+                                    <Col md="2">
+                                        <p className="SearchTxt">Search:</p>
+                                    </Col>
+                                    <Col md="10">
+                                        <Row>
+                                            <Col md="8">
+                                                <div className="input-group">
+                                                    <input type="text" id="m-search" className="form-control" style={{ width: this.state.searchString }} onChange={(val) => this.search(val.target.value)} />
+                                                    <a href={""} className="input-group-append search-close" onClick={this.searchOffHandler}>
+                                                        <i className="feather icon-x input-group-text" />
+                                                    </a>
+                                                    <span className="input-group-append search-btn btn btn-primary" onClick={this.searchOnHandler}>
+                                                        <i className="feather icon-search input-group-text" />
+                                                    </span>
+                                                </div>
+                                            </Col>
+                                            <Col md="4">
+                                                <FormControl className={classes.formControl}>
+                                                    <InputLabel id="demo-simple-select-label">Fields</InputLabel>
+                                                    <Select
+                                                        labelId="demo-simple-select-label"
+                                                        id="demo-simple-select"
+                                                        value={this.state.selectedFilter}
+                                                        onChange={(val) => { this.setState({ selectedFilter: val.target.value }) }}
+                                                    >
+                                                        {this.headCells &&
+                                                            this.headCells.map((Item) => {
+                                                                return <MenuItem value={Item.id}>{Item.id}</MenuItem>
+                                                            })
 
-                                                            }
-                                                        </Select>
-                                                    </FormControl>
-                                                </Col>
-                                            </Row>
-                                        </Col>
-                                    </Row>
-                                </div>
-                            </Col>
+                                                        }
+                                                    </Select>
+                                                </FormControl>
+                                            </Col>
+                                        </Row>
+                                    </Col>
+                                </Row>
+                            </div>
+                        </Col>
 
-                        }
+
 
                     </Row>
 
@@ -333,15 +331,15 @@ class TableData extends React.Component {
                                                     })}
 
                                                     <TableCell align="center" className="IconContainers">
-                                                        {data[index] ?
+                                                        {data[index] && showActiveIcon ?
                                                             data[index].isActive ?
                                                                 <i className="fas fa-times-circle" onClick={() => { deActiveAction(data[index], index) }} data-toggle="tooltip" data-placement="top" title="deaActivate" /> :
                                                                 <i className="fas fa-check-circle" onClick={() => { ActiveAction(data[index], index) }} data-toggle="tooltip" data-placement="top" title="Activate" />
                                                             : null
                                                         }
-                                                        <i className="fas fa-trash-alt" onClick={() => { this.deleteAction(data[index], index) }} data-toggle="tooltip" data-placement="top" title="Delete" />
-                                                        <i className="far fa-list-alt" onClick={() => { handleDetails(data[index], index) }} data-toggle="tooltip" data-placement="top" title="Show Details" />
-                                                        <i className="fas fa-edit" onClick={() => { handleEdit(data[index], index) }} data-toggle="tooltip" data-placement="top" title="Edit" />
+                                                        {showDelete && <i className="fas fa-trash-alt" onClick={() => { this.deleteAction(data[index], index) }} />}
+                                                        {handleDetails && <i className="far fa-list-alt" onClick={() => { handleDetails(data[index], index) }} data-toggle="tooltip" data-placement="top" title="Show Details" />}
+                                                        {handleEdit && <i className="fas fa-edit" onClick={() => { handleEdit(data[index], index) }} data-toggle="tooltip" data-placement="top" title="Edit" />}
                                                     </TableCell>
                                                 </TableRow>
                                             );
@@ -354,7 +352,7 @@ class TableData extends React.Component {
                                 </TableBody>
                             </Table>
                             :
-                            <p className="NoData">No Data</p>
+                            <p className="NoData">{noResultMSG}</p>
                         }
                     </TableContainer>
                     <div className="TablePaginationContainer">

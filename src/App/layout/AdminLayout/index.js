@@ -24,16 +24,21 @@ class AdminLayout extends Component {
     };
 
     componentDidMount() {
-        if (!getLoggedIn()) {
-            this.props.history.push('/signin');
-        }
+        getLoggedIn().then((res) => {
+            if (res == "false" || getLoggedIn() == false) {
+                this.props.history.push('/signin');
+            }
+        })
     }
 
     componentWillReceiveProps(props) {
-        if (!getLoggedIn()) {
-            props.history.push('/signin');
-        }
+        getLoggedIn().then((res) => {
+            if (res == "false" || getLoggedIn() == false) {
+                props.history.push('/signin');
+            }
+        })
     }
+
 
     componentWillMount() {
         if (this.props.windowWidth > 992 && this.props.windowWidth <= 1024 && this.props.layout !== 'horizontal') {
@@ -100,11 +105,11 @@ class AdminLayout extends Component {
 
 const mapStateToProps = state => {
     return {
-        defaultPath: state.GlobalState.defaultPath,
-        isFullScreen: state.GlobalState.isFullScreen,
-        collapseMenu: state.GlobalState.collapseMenu,
-        configBlock: state.GlobalState.configBlock,
-        layout: state.GlobalState.layout
+        defaultPath: state.storage.GlobalState.defaultPath,
+        isFullScreen: state.storage.GlobalState.isFullScreen,
+        collapseMenu: state.storage.GlobalState.collapseMenu,
+        configBlock: state.storage.GlobalState.configBlock,
+        layout: state.storage.GlobalState.layout
     }
 };
 

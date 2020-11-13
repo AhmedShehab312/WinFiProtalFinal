@@ -71,7 +71,7 @@ class CompanyProfile extends React.Component {
             HtttpPutDefult('brand/1', profileObject).then((res) => {
                 if (res) {
                     storeProfile(profileObject);
-                    displayToast('Profile data is updated succefully', true);
+                    displayToast('Profile data is updated successfully', true);
                     this.setState({ editMode: false })
                 }
             })
@@ -370,7 +370,7 @@ class CompanyProfile extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        OwnerProfile: state.ProfileState.OwnerProfile,
+        OwnerProfile: state.storage.ProfileState.OwnerProfile,
     };
 };
 

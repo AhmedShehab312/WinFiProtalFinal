@@ -25,11 +25,14 @@ export const getVariable = key => {
 
 
 export const setLoggedIn = _loggedIn => {
+  localStorage.setItem('loggedIn', _loggedIn.toString());
   globalsVariable["loggedIn"] = _loggedIn;
 };
 
-export const getLoggedIn = () => {
-  return globalsVariable["loggedIn"];
+export const getLoggedIn = async () => {
+  let res = await localStorage.getItem('loggedIn');
+  return res
+  // return globalsVariable["loggedIn"];
 };
 
 

@@ -22,9 +22,20 @@ class Brands extends React.Component {
             showEdit: false,
             showDetails: false,
             selectedBrand: null,
-            selectedIntervals: null,
             selectedBrandIndex: null,
-            newBrand: {},
+            newBrand: {
+                smtpIntegration: {
+                    server: "",
+                    port: "",
+                    username: "",
+                    password: ""
+                }
+            },
+            btnDisable: true,
+            EditArr: [],
+            btnDisableAdd: true,
+            AddArr: []
+
         }
     }
 
@@ -63,49 +74,51 @@ class Brands extends React.Component {
 
 
     async changeAddInput(Input, val) {
+        const { smtpIntegration } = this.state.newBrand;
+
         switch (Input) {
             case 'name':
-                await this.setState({
+                this.setState({
                     newBrand: {
                         ...this.state.newBrand,
                         name: val
                     }
                 })
                 break;
-            case 'email':
-                await this.setState({
+            case 'password':
+                this.setState({
                     newBrand: {
                         ...this.state.newBrand,
-                        email: val
-                    }
-                })
-                break;
-            case 'contact':
-                await this.setState({
-                    newBrand: {
-                        ...this.state.newBrand,
-                        contact: val
-                    }
-                })
-                break;
-            case 'contactPerson':
-                await this.setState({
-                    newBrand: {
-                        ...this.state.newBrand,
-                        contactPerson: val
+                        password: val
                     }
                 })
                 break;
             case 'address':
-                await this.setState({
+                this.setState({
                     newBrand: {
                         ...this.state.newBrand,
                         address: val
                     }
                 })
                 break;
+            case 'contact':
+                this.setState({
+                    newBrand: {
+                        ...this.state.newBrand,
+                        contact: val
+                    }
+                })
+                break;
+            case 'contactPersonal':
+                this.setState({
+                    newBrand: {
+                        ...this.state.newBrand,
+                        contactPerson: val
+                    }
+                })
+                break;
             case 'regID':
-                await this.setState({
+                this.setState({
                     newBrand: {
                         ...this.state.newBrand,
                         regID: val
@@ -113,100 +126,124 @@ class Brands extends React.Component {
                 })
                 break;
             case 'taxID':
-                await this.setState({
+                this.setState({
                     newBrand: {
                         ...this.state.newBrand,
                         taxID: val
                     }
                 })
                 break;
-            case 'smtpIntegration':
-                await this.setState({
+            case 'server':
+                smtpIntegration.server = val;
+                this.setState({
                     newBrand: {
                         ...this.state.newBrand,
-                        smtpIntegration: val
+                        smtpIntegration: smtpIntegration
                     }
                 })
                 break;
-            case 'smsApiKey':
-                await this.setState({
+            case 'port':
+                smtpIntegration.port = val;
+                this.setState({
                     newBrand: {
                         ...this.state.newBrand,
-                        smsApiKey: val
+                        smtpIntegration: smtpIntegration
                     }
                 })
                 break;
-            case 'senderID':
-                await this.setState({
+            case 'username':
+                smtpIntegration.username = val;
+                this.setState({
                     newBrand: {
                         ...this.state.newBrand,
-                        senderID: val
+                        smtpIntegration: smtpIntegration
+                    }
+                })
+                break;
+            case 'passwordSMTP':
+                smtpIntegration.password = val;
+                this.setState({
+                    newBrand: {
+                        ...this.state.newBrand,
+                        smtpIntegration: smtpIntegration
                     }
                 })
                 break;
             case 'sendName':
-                await this.setState({
+                this.setState({
                     newBrand: {
                         ...this.state.newBrand,
                         sendName: val
                     }
                 })
                 break;
-            case 'password':
-                await this.setState({
+            case 'senderID':
+                this.setState({
                     newBrand: {
                         ...this.state.newBrand,
-                        password: val
+                        senderID: val
+                    }
+                })
+                break;
+            case 'smsApiKey':
+                this.setState({
+                    newBrand: {
+                        ...this.state.newBrand,
+                        smsApiKey: val
+                    }
+                })
+                break;
+            case 'email':
+                this.setState({
+                    newBrand: {
+                        ...this.state.newBrand,
+                        email: val
                     }
                 })
                 break;
         }
+
     }
 
+
     async changeEditInput(Input, val) {
+        const { smtpIntegration } = this.state.selectedBrand;
+
         switch (Input) {
-            case 'name':
-                await this.setState({
+            case 'password':
+                this.setState({
                     selectedBrand: {
                         ...this.state.selectedBrand,
-                        name: val
-                    }
-                })
-                break;
-            case 'email':
-                await this.setState({
-                    selectedBrand: {
-                        ...this.state.selectedBrand,
-                        email: val
-                    }
-                })
-                break;
-            case 'contact':
-                await this.setState({
-                    selectedBrand: {
-                        ...this.state.selectedBrand,
-                        contact: val
-                    }
-                })
-                break;
-            case 'contactPerson':
-                await this.setState({
-                    selectedBrand: {
-                        ...this.state.selectedBrand,
-                        contactPerson: val
+                        password: val
                     }
                 })
                 break;
             case 'address':
-                await this.setState({
+                this.setState({
                     selectedBrand: {
                         ...this.state.selectedBrand,
                         address: val
                     }
                 })
                 break;
+            case 'contact':
+                this.setState({
+                    selectedBrand: {
+                        ...this.state.selectedBrand,
+                        contact: val
+                    }
+                })
+                break;
+            case 'contactPersonal':
+                this.setState({
+                    selectedBrand: {
+                        ...this.state.selectedBrand,
+                        contactPerson: val
+                    }
+                })
+                break;
             case 'regID':
-                await this.setState({
+                this.setState({
                     selectedBrand: {
                         ...this.state.selectedBrand,
                         regID: val
@@ -214,65 +251,103 @@ class Brands extends React.Component {
                 })
                 break;
             case 'taxID':
-                await this.setState({
+                this.setState({
                     selectedBrand: {
                         ...this.state.selectedBrand,
                         taxID: val
                     }
                 })
                 break;
-            case 'smtpIntegration':
-                await this.setState({
+            case 'server':
+                smtpIntegration.server = val;
+                this.setState({
                     selectedBrand: {
                         ...this.state.selectedBrand,
-                        smtpIntegration: val
+                        smtpIntegration: smtpIntegration
                     }
                 })
                 break;
-            case 'smsApiKey':
-                await this.setState({
+            case 'port':
+                smtpIntegration.port = val;
+                this.setState({
                     selectedBrand: {
                         ...this.state.selectedBrand,
-                        smsApiKey: val
+                        smtpIntegration: smtpIntegration
                     }
                 })
                 break;
-            case 'senderID':
-                await this.setState({
+            case 'username':
+                smtpIntegration.username = val;
+                this.setState({
                     selectedBrand: {
                         ...this.state.selectedBrand,
-                        senderID: val
+                        smtpIntegration: smtpIntegration
+                    }
+                })
+                break;
+            case 'passwordSMTP':
+                smtpIntegration.password = val;
+                this.setState({
+                    selectedBrand: {
+                        ...this.state.selectedBrand,
+                        smtpIntegration: smtpIntegration
                     }
                 })
                 break;
             case 'sendName':
-                await this.setState({
+                this.setState({
                     selectedBrand: {
                         ...this.state.selectedBrand,
                         sendName: val
                     }
                 })
                 break;
-            case 'password':
-                await this.setState({
+            case 'senderID':
+                this.setState({
                     selectedBrand: {
                         ...this.state.selectedBrand,
-                        password: val
+                        senderID: val
+                    }
+                })
+                break;
+            case 'smsApiKey':
+                this.setState({
+                    selectedBrand: {
+                        ...this.state.selectedBrand,
+                        smsApiKey: val
+                    }
+                })
+                break;
+            case 'name':
+                this.setState({
+                    selectedBrand: {
+                        ...this.state.selectedBrand,
+                        name: val
+                    }
+                })
+                break;
+            case 'email':
+                this.setState({
+                    selectedBrand: {
+                        ...this.state.selectedBrand,
+                        email: val
                     }
                 })
                 break;
         }
+
     }
 
     delete(Item, key) {
         const { Brands } = this.state;
         const { StoreBrands } = this.props;
-        HtttpDeleteDefult("brand/" + Item.id + "").then((res) => {
+        Brands[key].isDeleted = true;
+        HtttpPutDefult("brand/" + Item._id + "", Brands[key]).then((res) => {
             if (res) {
                 Brands.splice(key, 1);
                 this.setState({ Brands: Brands })
                 StoreBrands(Brands)
-                displayToast('brand is deleted succefully', true);
+                displayToast('Brand is deleted successfully', true);
 
             }
         })
@@ -289,13 +364,21 @@ class Brands extends React.Component {
     }
 
     Add() {
-        this.setState({ showAdd: true, newBrand: {}, });
+        this.setState({
+            showAdd: true, newBrand: {
+                smtpIntegration: {
+                    server: "",
+                    port: "",
+                    username: "",
+                    password: ""
+                }
+            }
+        });
     }
 
     AddForm() {
-        const { showAdd, newBrand } = this.state;
-        const { name, email, contact, contactPerson, address, regID, taxID, smtpIntegration, smsApiKey, senderID, sendName, password } = newBrand
-
+        const { showAdd, newBrand, btnDisableAdd } = this.state;
+        const { name, email, contact, contactPerson, address, regID, taxID, smtpIntegration, smsApiKey, senderID, sendName, password } = newBrand;
         const handleClose = () => this.setState({ showAdd: false });
         return (
             <>
@@ -308,73 +391,154 @@ class Brands extends React.Component {
                         <CardBody>
                             <Form>
                                 <Row>
-                                    <Col md={4}>
-                                        <InputWithText type="text" label={i18n.t("CompanyProfile.Name")} placeholder={i18n.t("Branches.NamePlacholder")} value={name} onChange={(val) => { this.changeAddInput('name', val) }} />
+                                    {/* <Col md={12}>
+                                                            <FormGroup className="profilePicContainer">
+                                                                <label>{i18n.t("CompanyProfile.Logo")}</label>
+                                                                <Input ref="file" type="file" name="file" onChange={this.changePhoto.bind(this)} />
+                                                                <img alt="" src={profilePic} />
+                                                            </FormGroup>
+                                                        </Col> */}
+                                    <Col md={6}>
+                                        <InputWithText type="text" label={i18n.t("CompanyProfile.Name")} placeholder={i18n.t("CompanyProfile.NamePlacholder")} value={name} isRequired onChange={(val) => this.changeAddInput("name", val)} onBlur={(val) => { this.checkAddValidation('14', val) }} />
                                     </Col>
-                                    <Col md={4}>
-                                        <InputWithText type="text" label={"Email"} placeholder={"Enter Email"} value={email} onChange={(val) => { this.changeAddInput('email', val) }} />
+                                    <Col md={6}>
+                                        <InputWithText type="text" label={i18n.t("CompanyProfile.Email")} placeholder={i18n.t("CompanyProfile.EmailPlacholder")} isRequired onChange={(val) => this.changeAddInput("email", val)} validation="email" onBlur={(val) => { this.checkAddValidation('0', val) }} value={email} />
                                     </Col>
-                                    <Col md={4}>
-                                        <InputWithText type="text" label={"Contact"} placeholder={"Enter contact"} value={contact} onChange={(val) => { this.changeAddInput('contact', val) }} />
+                                </Row>
+                                <Row>
+                                    <Col md={6}>
+                                        <InputWithText type="password" label={i18n.t("CompanyProfile.Password")} placeholder={"********"} onChange={(val) => this.changeAddInput("password", val)} value={password} validation="password" isRequired onBlur={(val) => { this.checkAddValidation('1', val) }} />
+                                    </Col>
+                                    <Col md={6}>
+                                        <InputWithText type="text" label={i18n.t("CompanyProfile.Address")} placeholder={i18n.t("CompanyProfile.AddressPlacholder")} onChange={(val) => this.changeAddInput("address", val)} value={address} isRequired onBlur={(val) => { this.checkAddValidation('2', val) }} />
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col md={6}>
+                                        <InputWithText type="text" label={i18n.t("CompanyProfile.Contact")} placeholder={"01222****"} onChange={(val) => this.changeAddInput("contact", val)} value={contact} validation="phone" isRequired onBlur={(val) => { this.checkAddValidation('3', val) }} />
+                                    </Col>
+                                    <Col md={6}>
+                                        <InputWithText type="text" label={i18n.t("CompanyProfile.ContactPersonal")} placeholder={"01222****"} onChange={(val) => this.changeAddInput("contactPersonal", val)} value={contactPerson} validation="phone" isRequired onBlur={(val) => { this.checkAddValidation('4', val) }} />
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col md={6}>
+                                        <InputWithText type="text" label={"Register ID"} placeholder={"Enter Register ID"} onChange={(val) => this.changeAddInput("regID", val)} value={regID} isRequired validation="number" onBlur={(val) => { this.checkAddValidation('5', val) }} />
+                                    </Col>
+                                    <Col md={6}>
+                                        <InputWithText type="text" label={"Tax ID"} placeholder={"Enter Tax ID"} onChange={(val) => this.changeAddInput("taxID", val)} value={taxID} isRequired validation="number" onBlur={(val) => { this.checkAddValidation('6', val) }} />
                                     </Col>
                                 </Row>
 
                                 <Row>
-                                    <Col md={4}>
-                                        <InputWithText type="text" label={"Contact Person"} placeholder={"Enter Contact Person"} value={contactPerson} onChange={(val) => { this.changeAddInput('contactPerson', val) }} />
+                                    <Col md={6}>
+                                        <InputWithText type="text" label={"SMTP Integration Server"} placeholder={"Enter SMTP Integration Server"} onChange={(val) => this.changeAddInput("server", val)} value={smtpIntegration.server} isRequired onBlur={(val) => { this.checkAddValidation('7', val) }} />
                                     </Col>
-                                    <Col md={4}>
-                                        <InputWithText type="text" label={"Address"} placeholder={"Enter Address"} value={address} onChange={(val) => { this.changeAddInput('address', val) }} />
+                                    <Col md={6}>
+                                        <InputWithText type="text" label={"SMTP Integration Port"} placeholder={"Enter SMTP Integration Port"} onChange={(val) => this.changeAddInput("port", val)} value={smtpIntegration.port} isRequired onBlur={(val) => { this.checkAddValidation('8', val) }} />
                                     </Col>
-                                    <Col md={4}>
-                                        <InputWithText type="password" label={"Password"} placeholder={"Enter Password"} value={password} onChange={(val) => { this.changeAddInput('password', val) }} />
-                                    </Col>
-
                                 </Row>
-                                <Row>
-                                    <Col md={4}>
-                                        <InputWithText type="text" label={"Tax ID"} placeholder={"Enter Tax ID"} value={taxID} onChange={(val) => { this.changeAddInput('taxID', val) }} />
-                                    </Col>
-                                    <Col md={4}>
-                                        <InputWithText type="text" label={"SMTP Integration"} placeholder={"Enter SMTP Integration"} value={smtpIntegration} onChange={(val) => { this.changeAddInput('smtpIntegration', val) }} />
-                                    </Col>
-                                    <Col md={4}>
-                                        <InputWithText type="text" label={"SMS Api Key"} placeholder={"Enter SMS Api Key "} value={smsApiKey} onChange={(val) => { this.changeAddInput('smsApiKey', val) }} />
-                                    </Col>
 
+                                <Row>
+                                    <Col md={6}>
+                                        <InputWithText type="text" label={"SMTP Integration User Name"} placeholder={"Enter SMTP Integration User Name"} onChange={(val) => this.changeAddInput("username", val)} value={smtpIntegration.username} isRequired onBlur={(val) => { this.checkAddValidation('9', val) }} />
+                                    </Col>
+                                    <Col md={6}>
+                                        <InputWithText type="password" label={"SMTP Integration Password"} placeholder={"Enter SMTP Integration Password"} onChange={(val) => this.changeAddInput("passwordSMTP", val)} value={smtpIntegration.password} isRequired validation="password" onBlur={(val) => { this.checkAddValidation('10', val) }} />
+                                    </Col>
                                 </Row>
-                                <Row>
-                                    <Col md={4}>
-                                        <InputWithText type="text" label={"Sender ID"} placeholder={"Enter Sender ID"} value={senderID} onChange={(val) => { this.changeAddInput('senderID', val) }} />
-                                    </Col>
-                                    <Col md={4}>
-                                        <InputWithText type="text" label={"Send Name"} placeholder={"Enter Send Name "} value={sendName} onChange={(val) => { this.changeAddInput('sendName', val) }} />
-                                    </Col>
-                                    <Col md={4}>
-                                        <InputWithText type="text" label={"Reg ID"} placeholder={"Enter Reg ID"} value={regID} onChange={(val) => { this.changeAddInput('regID', val) }} />
-                                    </Col>
 
+                                <Row>
+                                    <Col md={6}>
+                                        <InputWithText type="text" label={"SMS Api Key"} placeholder={"Enter SMS Api Key"} onChange={(val) => this.changeAddInput("smsApiKey", val)} value={smsApiKey} isRequired onBlur={(val) => { this.checkAddValidation('11', val) }} />
+                                    </Col>
+                                    <Col md={6}>
+                                        <InputWithText type="text" label={"Sender ID"} placeholder={"Enter Sender ID"} onChange={(val) => this.changeAddInput("senderID", val)} value={senderID} validation="number" isRequired onBlur={(val) => { this.checkAddValidation('12', val) }} />
+                                    </Col>
+                                    <Col md={6}>
+                                        <InputWithText type="text" label={"Send Name"} placeholder={"Enter Send Name"} onChange={(val) => this.changeAddInput("sendName", val)} value={sendName} isRequired onBlur={(val) => { this.checkAddValidation('13', val) }} />
+                                    </Col>
                                 </Row>
                             </Form>
+
                         </CardBody>
                     </Modal.Body>
 
                     <Modal.Footer>
                         <Button variant="secondary" onClick={handleClose}>Close</Button>
-                        <Button variant="primary" onClick={() => this.AddBrand()}>Save Changes</Button>
+                        <Button variant="primary" disabled={btnDisableAdd} onClick={() => this.AddBrand()}>Save Changes</Button>
                     </Modal.Footer>
                 </Modal>
             </>
         );
     }
 
-    selectedInterval(val) {
-        this.setState({ selectedIntervals: val });
+    checkEditValidation(index, val) {
+        const { OwnerProfile } = this.props;
+
+        const { EditArr } = this.state;
+        let updatedArr;
+        updatedArr = EditArr;
+        updatedArr[index] = val;
+        this.setState({ EditArr: updatedArr })
+        this.checkDisableOrEnableBtnEdit(14, EditArr);
+
+    }
+
+
+    checkDisableOrEnableBtnEdit(num, arr) {
+        let result;
+
+        if (arr.length == num) {
+            result = arr.filter((Item) => {
+                return Item
+            });
+            if (result.length != num) {
+                this.setState({ btnDisable: true })
+            }
+            else {
+                this.setState({ btnDisable: false })
+            }
+        }
+        else {
+            this.setState({ btnDisable: true })
+        }
+    }
+
+
+    checkAddValidation(index, val) {
+
+        const { AddArr } = this.state;
+        let updatedArr;
+        updatedArr = AddArr;
+        updatedArr[index] = val;
+        this.setState({ AddArr: updatedArr })
+        this.checkDisableOrEnableBtnAdd(15, AddArr);
+
+    }
+
+
+    checkDisableOrEnableBtnAdd(num, arr) {
+        let result;
+        if (arr.length == num) {
+            result = arr.filter((Item) => {
+                return Item
+            });
+            if (result.length != num) {
+                this.setState({ btnDisableAdd: true })
+            }
+            else {
+                this.setState({ btnDisableAdd: false })
+            }
+        }
+        else {
+            this.setState({ btnDisableAdd: true })
+        }
     }
 
 
     EditForm() {
-        const { showEdit, selectedBrand } = this.state;
+        const { showEdit, selectedBrand, btnDisable } = this.state;
         const { name, email, contact, contactPerson, address, regID, taxID, smtpIntegration, smsApiKey, senderID, sendName, password } = selectedBrand
 
         const handleClose = () => this.setState({ showEdit: false });
@@ -388,54 +552,76 @@ class Brands extends React.Component {
                         <CardBody>
                             <Form>
                                 <Row>
-                                    <Col md={4}>
-                                        <InputWithText type="text" label={i18n.t("CompanyProfile.Name")} placeholder={i18n.t("Branches.NamePlacholder")} value={name} onChange={(val) => { this.changeEditInput('name', val) }} />
+                                    {/* <Col md={12}>
+                                                            <FormGroup className="profilePicContainer">
+                                                                <label>{i18n.t("CompanyProfile.Logo")}</label>
+                                                                <Input ref="file" type="file" name="file" onChange={this.changePhoto.bind(this)} />
+                                                                <img alt="" src={profilePic} />
+                                                            </FormGroup>
+                                                        </Col> */}
+                                    <Col md={6}>
+                                        <InputWithText type="text" label={i18n.t("CompanyProfile.Name")} placeholder={i18n.t("CompanyProfile.NamePlacholder")} value={name} disabled />
                                     </Col>
-                                    <Col md={4}>
-                                        <InputWithText type="text" label={"Email"} placeholder={"Enter Email"} value={email} onChange={(val) => { this.changeEditInput('email', val) }} />
+                                    <Col md={6}>
+                                        <InputWithText type="text" label={i18n.t("CompanyProfile.Email")} placeholder={i18n.t("CompanyProfile.EmailPlacholder")} isRequired onChange={(val) => this.changeEditInput("email", val)} validation="email" onBlur={(val) => { this.checkEditValidation('0', val) }} value={email} />
                                     </Col>
-                                    <Col md={4}>
-                                        <InputWithText type="text" label={"Contact"} placeholder={"Enter contact"} value={contact} onChange={(val) => { this.changeEditInput('contact', val) }} />
+                                </Row>
+                                <Row>
+                                    <Col md={6}>
+                                        <InputWithText type="password" label={i18n.t("CompanyProfile.Password")} placeholder={"********"} onChange={(val) => this.changeInput("password", val)} value={password} validation="password" isRequired onBlur={(val) => { this.checkEditValidation('1', val) }} />
+                                    </Col>
+                                    <Col md={6}>
+                                        <InputWithText type="text" label={i18n.t("CompanyProfile.Address")} placeholder={i18n.t("CompanyProfile.AddressPlacholder")} onChange={(val) => this.changeEditInput("address", val)} value={address} isRequired onBlur={(val) => { this.checkEditValidation('2', val) }} />
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col md={6}>
+                                        <InputWithText type="text" label={i18n.t("CompanyProfile.Contact")} placeholder={"01222****"} onChange={(val) => this.changeEditInput("contact", val)} value={contact} validation="phone" isRequired onBlur={(val) => { this.checkEditValidation('3', val) }} />
+                                    </Col>
+                                    <Col md={6}>
+                                        <InputWithText type="text" label={i18n.t("CompanyProfile.ContactPersonal")} placeholder={"01222****"} onChange={(val) => this.changeEditInput("contactPersonal", val)} value={contactPerson} validation="phone" isRequired onBlur={(val) => { this.checkEditValidation('4', val) }} />
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col md={6}>
+                                        <InputWithText type="text" label={"Register ID"} placeholder={"Enter Register ID"} onChange={(val) => this.changeEditInput("regID", val)} value={regID} isRequired validation="number" onBlur={(val) => { this.checkEditValidation('5', val) }} />
+                                    </Col>
+                                    <Col md={6}>
+                                        <InputWithText type="text" label={"Tax ID"} placeholder={"Enter Tax ID"} onChange={(val) => this.changeEditInput("taxID", val)} value={taxID} isRequired validation="number" onBlur={(val) => { this.checkEditValidation('6', val) }} />
                                     </Col>
                                 </Row>
 
                                 <Row>
-                                    <Col md={4}>
-                                        <InputWithText type="text" label={"Contact Person"} placeholder={"Enter Contact Person"} value={contactPerson} onChange={(val) => { this.changeEditInput('contactPerson', val) }} />
+                                    <Col md={6}>
+                                        <InputWithText type="text" label={"SMTP Integration Server"} placeholder={"Enter SMTP Integration Server"} onChange={(val) => this.changeEditInput("server", val)} value={smtpIntegration.server} isRequired onBlur={(val) => { this.checkEditValidation('7', val) }} />
                                     </Col>
-                                    <Col md={4}>
-                                        <InputWithText type="text" label={"Address"} placeholder={"Enter Address"} value={address} onChange={(val) => { this.changeEditInput('address', val) }} />
+                                    <Col md={6}>
+                                        <InputWithText type="text" label={"SMTP Integration Port"} placeholder={"Enter SMTP Integration Port"} onChange={(val) => this.changeEditInput("port", val)} value={smtpIntegration.port} isRequired onBlur={(val) => { this.checkEditValidation('8', val) }} />
                                     </Col>
-                                    <Col md={4}>
-                                        <InputWithText type="password" label={"Password"} placeholder={"Enter Password"} value={password} onChange={(val) => { this.changeEditInput('password', val) }} />
-                                    </Col>
-
                                 </Row>
-                                <Row>
-                                    <Col md={4}>
-                                        <InputWithText type="text" label={"Tax ID"} placeholder={"Enter Tax ID"} value={taxID} onChange={(val) => { this.changeEditInput('taxID', val) }} />
-                                    </Col>
-                                    <Col md={4}>
-                                        <InputWithText type="text" label={"SMTP Integration"} placeholder={"Enter SMTP Integration"} value={smtpIntegration} onChange={(val) => { this.changeEditInput('smtpIntegration', val) }} />
-                                    </Col>
-                                    <Col md={4}>
-                                        <InputWithText type="text" label={"SMS Api Key"} placeholder={"Enter SMS Api Key "} value={smsApiKey} onChange={(val) => { this.changeEditInput('smsApiKey', val) }} />
-                                    </Col>
 
+                                <Row>
+                                    <Col md={6}>
+                                        <InputWithText type="text" label={"SMTP Integration User Name"} placeholder={"Enter SMTP Integration User Name"} onChange={(val) => this.changeEditInput("username", val)} value={smtpIntegration.username} isRequired onBlur={(val) => { this.checkEditValidation('9', val) }} />
+                                    </Col>
+                                    <Col md={6}>
+                                        <InputWithText type="password" label={"SMTP Integration Password"} placeholder={"Enter SMTP Integration Password"} onChange={(val) => this.changeEditInput("passwordSMTP", val)} value={smtpIntegration.password} isRequired validation="password" onBlur={(val) => { this.checkEditValidation('10', val) }} />
+                                    </Col>
                                 </Row>
-                                <Row>
-                                    <Col md={4}>
-                                        <InputWithText type="text" label={"Sender ID"} placeholder={"Enter Sender ID"} value={senderID} onChange={(val) => { this.changeEditInput('senderID', val) }} />
-                                    </Col>
-                                    <Col md={4}>
-                                        <InputWithText type="text" label={"Send Name"} placeholder={"Enter Send Name "} value={sendName} onChange={(val) => { this.changeEditInput('sendName', val) }} />
-                                    </Col>
-                                    <Col md={4}>
-                                        <InputWithText type="text" label={"Reg ID"} placeholder={"Enter Reg ID"} value={regID} onChange={(val) => { this.changeEditInput('regID', val) }} />
-                                    </Col>
 
+                                <Row>
+                                    <Col md={6}>
+                                        <InputWithText type="text" label={"SMS Api Key"} placeholder={"Enter SMS Api Key"} onChange={(val) => this.changeEditInput("smsApiKey", val)} value={smsApiKey} isRequired onBlur={(val) => { this.checkEditValidation('11', val) }} />
+                                    </Col>
+                                    <Col md={6}>
+                                        <InputWithText type="text" label={"Sender ID"} placeholder={"Enter Sender ID"} onChange={(val) => this.changeEditInput("senderID", val)} value={senderID} validation="number" isRequired onBlur={(val) => { this.checkEditValidation('12', val) }} />
+                                    </Col>
+                                    <Col md={6}>
+                                        <InputWithText type="text" label={"Send Name"} placeholder={"Enter Send Name"} onChange={(val) => this.changeEditInput("sendName", val)} value={sendName} isRequired onBlur={(val) => { this.checkEditValidation('13', val) }} />
+                                    </Col>
                                 </Row>
                             </Form>
+
                         </CardBody>
                     </Modal.Body>
 
@@ -451,16 +637,22 @@ class Brands extends React.Component {
     DetailsForm() {
         const { showDetails, selectedBrand } = this.state;
         const { name, email, contact, contactPerson, address, regID, taxID, smtpIntegration, smsApiKey, senderID, sendName } = selectedBrand
+
         const handleClose = () => this.setState({ showDetails: false });
         return (
             <>
                 <Modal show={showDetails} onHide={handleClose} dialogClassName="modal-70w BranchesDetails">
                     <Modal.Header closeButton>
-                        <Modal.Title>Branch Details</Modal.Title>
+                        <Modal.Title>Brand Details</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                         <CardBody>
                             <Form>
+                                <Row>
+                                    <Col>
+                                        <h3 style={{ marginBottom: '30px' }}>INFO</h3>
+                                    </Col>
+                                </Row>
                                 <Row>
                                     <Col md="4">
                                         <div className="detailsContainer">
@@ -470,74 +662,108 @@ class Brands extends React.Component {
                                     </Col>
                                     <Col md="4">
                                         <div className="detailsContainer">
-                                            <label className="Title">Email:</label>
+                                            <label className="Title">{i18n.t("CompanyProfile.Email")}:</label>
                                             <label className="subTitle">{email ? email : "No value"}</label>
                                         </div>
                                     </Col>
                                     <Col md="4">
                                         <div className="detailsContainer">
-                                            <label className="Title">Contact:</label>
-                                            <label className="subTitle">{contact ? contact : "No value"}</label>
-                                        </div>
-                                    </Col>
-
-                                </Row>
-                                <Row>
-                                    <Col md="4">
-                                        <div className="detailsContainer">
-                                            <label className="Title">Contact Person:</label>
-                                            <label className="subTitle">{contactPerson ? contactPerson : "No value"}</label>
-                                        </div>
-                                    </Col>
-                                    <Col md="4">
-                                        <div className="detailsContainer">
-                                            <label className="Title">Address:</label>
+                                            <label className="Title">{i18n.t("CompanyProfile.Address")}:</label>
                                             <label className="subTitle">{address ? address : "No value"}</label>
                                         </div>
                                     </Col>
+                                </Row>
+
+                                <Row>
                                     <Col md="4">
                                         <div className="detailsContainer">
-                                            <label className="Title">Reg ID:</label>
-                                            <label className="subTitle">{regID ? regID : "No value"}</label>
+                                            <label className="Title">{i18n.t("CompanyProfile.Contact")}:</label>
+                                            <label className="subTitle">{contact ? contact : "No value"}</label>
+                                        </div>
+                                    </Col>
+                                    <Col md="4">
+                                        <div className="detailsContainer">
+                                            <label className="Title">{i18n.t("CompanyProfile.ContactPersonal")}:</label>
+                                            <label className="subTitle">{contactPerson ? contactPerson : "No value"}</label>
                                         </div>
                                     </Col>
                                 </Row>
+
                                 <Row>
-                                    <Col md="4">
+                                    <Col>
+                                        <h3 style={{ marginBottom: '30px', marginTop: '30px' }}>SMTP INTEGRATION</h3>
+                                    </Col>
+                                </Row>
+
+                                <Row>
+                                    <Col md="6">
+                                        <div className="detailsContainer">
+                                            <label className="Title">Server:</label>
+                                            <label className="subTitle">{smtpIntegration.server ? smtpIntegration.server : "No value"}</label>
+                                        </div>
+                                    </Col>
+                                    <Col md="6">
+                                        <div className="detailsContainer">
+                                            <label className="Title">Port:</label>
+                                            <label className="subTitle">{smtpIntegration.port ? smtpIntegration.port : "No value"}</label>
+                                        </div>
+                                    </Col>
+                                </Row>
+
+                                <Row>
+                                    <Col md="6">
+                                        <div className="detailsContainer">
+                                            <label className="Title">User Name:</label>
+                                            <label className="subTitle">{smtpIntegration.username ? smtpIntegration.username : "No value"}</label>
+                                        </div>
+                                    </Col>
+                                    <Col md="6">
+                                        <div className="detailsContainer">
+                                            <label className="Title">SMS Api Key:</label>
+                                            <label className="subTitle">{smsApiKey ? smsApiKey : "No value"}</label>
+                                        </div>
+                                    </Col>
+                                </Row>
+
+
+                                <Row>
+                                    <Col>
+                                        <h3 style={{ marginBottom: '30px', marginTop: '30px' }}>COMMERCIAL</h3>
+                                    </Col>
+                                </Row>
+
+
+                                <Row>
+                                    <Col md="6">
+                                        <div className="detailsContainer">
+                                            <label className="Title">Register ID:</label>
+                                            <label className="subTitle">{regID ? regID : "No value"}</label>
+                                        </div>
+                                    </Col>
+                                    <Col md="6">
                                         <div className="detailsContainer">
                                             <label className="Title">Tax ID:</label>
                                             <label className="subTitle">{taxID ? taxID : "No value"}</label>
                                         </div>
                                     </Col>
-                                    <Col md="4">
-                                        <div className="detailsContainer">
-                                            <label className="Title">SMTP Integration:</label>
-                                            <label className="subTitle">{smtpIntegration ? smtpIntegration : "No value"}</label>
-                                        </div>
-                                    </Col>
-                                    <Col md="4">
+                                </Row>
+                                <Row>
+                                    <Col md="6">
                                         <div className="detailsContainer">
                                             <label className="Title">Sender ID:</label>
                                             <label className="subTitle">{senderID ? senderID : "No value"}</label>
                                         </div>
                                     </Col>
 
-                                </Row>
-                                <Row>
-                                    <Col md="4">
+                                    <Col md="6">
                                         <div className="detailsContainer">
                                             <label className="Title">Send Name:</label>
                                             <label className="subTitle">{sendName ? sendName : "No value"}</label>
                                         </div>
                                     </Col>
-                                    <Col md="4">
-                                        <div className="detailsContainer">
-                                            <label className="Title">SMS Api Key:</label>
-                                            <label className="subTitle">{smsApiKey ? smsApiKey : "No value"}</label>
-                                        </div>
-                                    </Col>
 
                                 </Row>
+
                             </Form>
                         </CardBody>
 
@@ -553,15 +779,16 @@ class Brands extends React.Component {
 
     EditBrand() {
         const { selectedBrand, selectedBrandIndex, Brands } = this.state;
-        const { StoreBrands } = this.props;
-
+        const { storeProfile } = this.props;
         this.setState({ showEdit: false });
-        HtttpPutDefult("brand/" + selectedBrand.id + "", selectedBrand).then((res) => {
+        let res = selectedBrand;
+        HtttpPutDefult('brand/' + selectedBrand._id + '', res).then((res) => {
             if (res) {
                 Brands[selectedBrandIndex] = selectedBrand;
                 this.setState({ Brands: Brands });
                 StoreBrands(Brands)
-                displayToast('Brand is updated succefully', true);
+                displayToast('Brand data is updated successfully', true);
+                this.setState({ editMode: false })
             }
         })
     }
@@ -572,16 +799,19 @@ class Brands extends React.Component {
         this.setState({ showAdd: false });
         newBrand.isActive = true;
         newBrand.isDeleted = false;
-        newBrand.logo = "";
+        newBrand.logo = "string";
+        newBrand.taxImage = "string";
+        newBrand.regImage = "string";
         HtttpPostDefult("brand/create", newBrand).then((res) => {
             if (!res.errors) {
-                Brands.push(res);
+                newBrand._id = res.id;
+                Brands.push(newBrand);
                 StoreBrands(Brands);
                 this.setState({ Brands: Brands });
-                displayToast('Brand data is added succefully', true);
+                displayToast('Brand data is added successfully', true);
             }
             else {
-                displayToast('Brand data is not added succefully', false);
+                displayToast('Brand data is not added successfully', false);
             }
         })
     }
@@ -590,12 +820,12 @@ class Brands extends React.Component {
         const { selectedBrandIndex, Brands } = this.state;
         const { StoreBrands } = this.props;
         selectedBrand.isActive = true;
-        HtttpPutDefult("brand/" + selectedBrand.id + "", selectedBrand).then((res) => {
+        HtttpPutDefult("brand/" + selectedBrand._id + "", selectedBrand).then((res) => {
             if (res) {
                 Brands[selectedBrandIndex] = selectedBrand;
                 this.setState({ Brands: Brands });
                 StoreBrands(Brands)
-                displayToast('Brand is updated succefully', true);
+                displayToast('Brand is activated successfully', true);
             }
         })
     }
@@ -604,12 +834,12 @@ class Brands extends React.Component {
         const { selectedBrandIndex, Brands } = this.state;
         const { StoreBrands } = this.props;
         selectedBrand.isActive = false;
-        HtttpPutDefult("brand/" + selectedBrand.id + "", selectedBrand).then((res) => {
+        HtttpPutDefult("brand/" + selectedBrand._id + "", selectedBrand).then((res) => {
             if (res) {
                 Brands[selectedBrandIndex] = selectedBrand;
                 this.setState({ Brands: Brands });
                 StoreBrands(Brands)
-                displayToast('Brand is updated succefully', true);
+                displayToast('Brand is deactivated successfully', true);
             }
         })
     }
@@ -637,9 +867,10 @@ class Brands extends React.Component {
                                 handleAdd={() => { this.Add() }}
                                 ActiveAction={(val, index) => { this.ActiveBranch(val, index) }}
                                 deActiveAction={(val, index) => { this.deActiveBranch(val, index) }}
+                                showActiveIcon
+                                showDelete
+                                noResultMSG={"There is no available brands"}
                             />
-
-
 
                         </Col>
                     </Row>
@@ -651,7 +882,7 @@ class Brands extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        Brands: state.BrandsState.Brands,
+        Brands: state.storage.BrandsState.Brands,
     };
 };
 
