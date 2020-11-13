@@ -779,10 +779,9 @@ class Branches extends React.Component {
     AddAccessPointSubmit() {
         const { selectedBranch, selectedBranchIndex, Branches, NewAccessPoints } = this.state;
         const { storeBranches } = this.props;
-        debugger
         selectedBranch.accessPoints ? selectedBranch.accessPoints.push(NewAccessPoints) : selectedBranch.accessPoints = [NewAccessPoints];
         this.setState({ showAddAccessPoint: false });
-        HtttpPutDefult("branch/" + selectedBranch._id + "", selectedBranch).then((res) => {
+        HtttpPutDefult("branch/" + selectedBranch._id + "", selectedBranch, true).then((res) => {
             if (res) {
                 Branches[selectedBranchIndex] = selectedBranch;
                 this.setState({ Branches: Branches });
@@ -797,7 +796,7 @@ class Branches extends React.Component {
         const { storeBranches } = this.props;
         selectedBranch.accessPoints[SelectedAccessPointsIndex] = SelectedAccessPoints;
         this.setState({ showEditAccessPoint: false });
-        HtttpPutDefult("branch/" + selectedBranch._id + "", selectedBranch).then((res) => {
+        HtttpPutDefult("branch/" + selectedBranch._id + "", selectedBranch, true).then((res) => {
             if (res) {
                 Branches[selectedBranchIndex] = selectedBranch;
                 this.setState({ Branches: Branches });
@@ -972,7 +971,7 @@ class Branches extends React.Component {
         selectedBranch.interval = selectedIntervals.name;
         selectedBranch.allowedServices = res.join();
         this.setState({ showEdit: false });
-        HtttpPutDefult("branch/" + selectedBranch._id + "", selectedBranch).then((res) => {
+        HtttpPutDefult("branch/" + selectedBranch._id + "", selectedBranch, true).then((res) => {
             if (res) {
                 Branches[selectedBranchIndex] = selectedBranch;
                 this.setState({ Branches: Branches });
@@ -1000,7 +999,7 @@ class Branches extends React.Component {
         newBranch.allowedServices = res.join();
         this.resetAllAllowedServices();
 
-        HtttpPostDefult("branch/create", newBranch).then((res) => {
+        HtttpPostDefult("branch/create", newBranch, true).then((res) => {
             if (!res.errors) {
                 newBranch._id = res.id
                 Branches.push(newBranch);
@@ -1018,7 +1017,7 @@ class Branches extends React.Component {
         const { selectedBranchIndex, Branches } = this.state;
         const { storeBranches } = this.props;
         selectedBranch.isActive = true;
-        HtttpPutDefult("branch/" + selectedBranch._id + "", selectedBranch).then((res) => {
+        HtttpPutDefult("branch/" + selectedBranch._id + "", selectedBranch, true).then((res) => {
             if (res) {
                 Branches[selectedBranchIndex] = selectedBranch;
                 this.setState({ Branches: Branches });
@@ -1032,7 +1031,7 @@ class Branches extends React.Component {
         const { selectedBranchIndex, Branches } = this.state;
         const { storeBranches } = this.props;
         selectedBranch.isActive = false;
-        HtttpPutDefult("branch/" + selectedBranch._id + "", selectedBranch).then((res) => {
+        HtttpPutDefult("branch/" + selectedBranch._id + "", selectedBranch, true).then((res) => {
             if (res) {
                 Branches[selectedBranchIndex] = selectedBranch;
                 this.setState({ Branches: Branches });

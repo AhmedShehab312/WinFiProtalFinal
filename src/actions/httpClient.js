@@ -40,7 +40,7 @@ function errorHandler(err, data) {
     } else errMsg = data.error_description;
   } else {
     if (err === 404) {
-      errMsg = i18n.t("Errors.404");
+      errMsg = "Not Found";
     } else if (err === 401) {
       errMsg = i18n.t("Errors.401");
     } else {
@@ -52,7 +52,7 @@ function errorHandler(err, data) {
     }
   }
   if (err === 401) {
-    window.location.href = "/quacck";
+    window.location.href = "/";
   }
   displayToast(errMsg);
 }
@@ -93,8 +93,7 @@ export function setRequestHeader(isRefresh, isLogin, url) {
 
 export function HtttpGetDefult(
   url,
-  serviceKey,
-  showSpinner = true,
+  showSpinner = false,
   isLogin = false,
   isRefresh = false
 ) {
@@ -120,8 +119,7 @@ export function HtttpGetDefult(
 export function HtttpPostDefult(
   url,
   data,
-  serviceKey,
-  showSpinner = true,
+  showSpinner = false,
   isLogin = false,
   isRefresh = false
 
@@ -146,8 +144,7 @@ export function HtttpPostDefult(
 export function HtttpDeleteDefult(
   url,
   data,
-  serviceKey,
-  showSpinner = true,
+  showSpinner = false,
   isLogin = false,
   isRefresh = false
 
@@ -172,8 +169,7 @@ export function HtttpDeleteDefult(
 export function HtttpPutDefult(
   url,
   data,
-  serviceKey,
-  showSpinner = true,
+  showSpinner = false,
   isLogin = false,
   isRefresh = false
 

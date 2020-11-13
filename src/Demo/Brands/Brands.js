@@ -342,7 +342,7 @@ class Brands extends React.Component {
         const { Brands } = this.state;
         const { StoreBrands } = this.props;
         Brands[key].isDeleted = true;
-        HtttpPutDefult("brand/" + Item._id + "", Brands[key]).then((res) => {
+        HtttpPutDefult("brand/" + Item._id + "", Brands[key], true).then((res) => {
             if (res) {
                 Brands.splice(key, 1);
                 this.setState({ Brands: Brands })
@@ -782,7 +782,7 @@ class Brands extends React.Component {
         const { storeProfile } = this.props;
         this.setState({ showEdit: false });
         let res = selectedBrand;
-        HtttpPutDefult('brand/' + selectedBrand._id + '', res).then((res) => {
+        HtttpPutDefult('brand/' + selectedBrand._id + '', res, true).then((res) => {
             if (res) {
                 Brands[selectedBrandIndex] = selectedBrand;
                 this.setState({ Brands: Brands });
@@ -802,7 +802,7 @@ class Brands extends React.Component {
         newBrand.logo = "string";
         newBrand.taxImage = "string";
         newBrand.regImage = "string";
-        HtttpPostDefult("brand/create", newBrand).then((res) => {
+        HtttpPostDefult("brand/create", newBrand, true).then((res) => {
             if (!res.errors) {
                 newBrand._id = res.id;
                 Brands.push(newBrand);
@@ -820,7 +820,7 @@ class Brands extends React.Component {
         const { selectedBrandIndex, Brands } = this.state;
         const { StoreBrands } = this.props;
         selectedBrand.isActive = true;
-        HtttpPutDefult("brand/" + selectedBrand._id + "", selectedBrand).then((res) => {
+        HtttpPutDefult("brand/" + selectedBrand._id + "", selectedBrand, true).then((res) => {
             if (res) {
                 Brands[selectedBrandIndex] = selectedBrand;
                 this.setState({ Brands: Brands });
@@ -834,7 +834,7 @@ class Brands extends React.Component {
         const { selectedBrandIndex, Brands } = this.state;
         const { StoreBrands } = this.props;
         selectedBrand.isActive = false;
-        HtttpPutDefult("brand/" + selectedBrand._id + "", selectedBrand).then((res) => {
+        HtttpPutDefult("brand/" + selectedBrand._id + "", selectedBrand, true).then((res) => {
             if (res) {
                 Brands[selectedBrandIndex] = selectedBrand;
                 this.setState({ Brands: Brands });
