@@ -427,6 +427,7 @@ class Branches extends React.Component {
 
 
     Add() {
+        this.resetAllAllowedServices();
         this.setState({
             showAdd: true,
             newBranch: {},
