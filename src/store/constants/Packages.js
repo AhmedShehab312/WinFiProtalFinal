@@ -1,0 +1,3 @@
+const STORE_PACKAGES = 'STORE_PACKAGES';
+
+export { STORE_PACKAGES };

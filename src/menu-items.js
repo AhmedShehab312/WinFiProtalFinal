@@ -61,6 +61,14 @@ export default {
             role: ["OWNER", "ADMIN"],
             children: [
                 {
+                    id: 'Packages',
+                    title: 'Packages',
+                    type: 'item',
+                    url: '/Packages',
+                    icon: 'fas fa-archive',
+                    role: ["OWNER", "ADMIN"],
+                },
+                {
                     id: 'Analytics',
                     title: 'Analytics',
                     type: 'item',

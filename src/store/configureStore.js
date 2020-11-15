@@ -8,13 +8,15 @@ import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage' // defaults to localStorage for web
 import { CLEAR_REDUCERS } from './constants/ClearState';
 import BrandsReducer from './reducers/BrandsReducer';
+import PackagesReducer from './reducers/PackagesReducer';
 
 const storageReducer = combineReducers({
     ProfileState: ProfileReducer,
     BranchesState: BranchesReducer,
     GlobalState: GlobalReducer,
     AdminsState: AdminsReducer,
-    BrandsState: BrandsReducer
+    BrandsState: BrandsReducer,
+    PackagesState: PackagesReducer
 });
 
 // Middleware: Redux Persist Config

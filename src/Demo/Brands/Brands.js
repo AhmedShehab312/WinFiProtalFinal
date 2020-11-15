@@ -6,7 +6,7 @@ import Aux from "../../hoc/_Aux";
 import TableData from '../../App/components/Tables/TablesComp';
 import './BrandsStyle.scss';
 import i18n from '../../i18n';
-import { HtttpDeleteDefult, HtttpPostDefult, HtttpPutDefult } from '../../actions/httpClient';
+import { HtttpGetDefult, HtttpPostDefult, HtttpPutDefult } from '../../actions/httpClient';
 import { connect } from 'react-redux';
 import { displayToast } from '../../globals/globals';
 import { StoreBrands } from '../../store/actions/BrandsAction';
@@ -57,20 +57,28 @@ class Brands extends React.Component {
     DataShowPerTable = ["name", "email", "address", "contact"];
 
     async componentDidMount() {
-        const { Brands } = this.props;
-        if (Brands) {
-            let result = await Brands.filter((Item) => {
-                return Item.isDeleted == false;
-            })
+        const { StoreBrands } = this.props;
+        let Result;
+        await HtttpGetDefult('brand/list', true).then((res) => {
+            if (res) {
+                Result = res;
+                StoreBrands(res);
+            }
+        })
 
-            this.setState({ Brands: result });
-            setTimeout(
-                () => this.setState({ Brands: result }),
-                10
-            );
-        }
+        let Brands = await Result.filter((Item) => {
+            return Item.isDeleted == false;
+        })
 
+
+        this.setState({ Brands: Brands });
+        setTimeout(
+            () => this.setState({ Brands: Brands }),
+            10
+        );
     }
+
+
 
 
     async changeAddInput(Input, val) {
@@ -453,7 +461,7 @@ class Brands extends React.Component {
                                         <InputWithText type="text" label={"SMS Api Key"} placeholder={"Enter SMS Api Key"} onChange={(val) => this.changeAddInput("smsApiKey", val)} value={smsApiKey} isRequired onBlur={(val) => { this.checkAddValidation('11', val) }} />
                                     </Col>
                                     <Col md={6}>
-                                        <InputWithText type="text" label={"Sender ID"} placeholder={"Enter Sender ID"} onChange={(val) => this.changeAddInput("senderID", val)} value={senderID} validation="number" isRequired onBlur={(val) => { this.checkAddValidation('12', val) }} />
+                                        <InputWithText type="text" label={"SMS Sender ID"} placeholder={"Enter SMS Sender ID"} onChange={(val) => this.changeAddInput("senderID", val)} value={senderID} validation="number" isRequired onBlur={(val) => { this.checkAddValidation('12', val) }} />
                                     </Col>
                                     <Col md={6}>
                                         <InputWithText type="text" label={"Send Name"} placeholder={"Enter Send Name"} onChange={(val) => this.changeAddInput("sendName", val)} value={sendName} isRequired onBlur={(val) => { this.checkAddValidation('13', val) }} />
@@ -474,7 +482,6 @@ class Brands extends React.Component {
     }
 
     checkEditValidation(index, val) {
-        const { OwnerProfile } = this.props;
 
         const { EditArr } = this.state;
         let updatedArr;
@@ -614,7 +621,7 @@ class Brands extends React.Component {
                                         <InputWithText type="text" label={"SMS Api Key"} placeholder={"Enter SMS Api Key"} onChange={(val) => this.changeEditInput("smsApiKey", val)} value={smsApiKey} isRequired onBlur={(val) => { this.checkEditValidation('11', val) }} />
                                     </Col>
                                     <Col md={6}>
-                                        <InputWithText type="text" label={"Sender ID"} placeholder={"Enter Sender ID"} onChange={(val) => this.changeEditInput("senderID", val)} value={senderID} validation="number" isRequired onBlur={(val) => { this.checkEditValidation('12', val) }} />
+                                        <InputWithText type="text" label={"Sender ID"} placeholder={"Enter SMS Sender ID"} onChange={(val) => this.changeEditInput("senderID", val)} value={senderID} validation="number" isRequired onBlur={(val) => { this.checkEditValidation('12', val) }} />
                                     </Col>
                                     <Col md={6}>
                                         <InputWithText type="text" label={"Send Name"} placeholder={"Enter Send Name"} onChange={(val) => this.changeEditInput("sendName", val)} value={sendName} isRequired onBlur={(val) => { this.checkEditValidation('13', val) }} />
@@ -627,7 +634,7 @@ class Brands extends React.Component {
 
                     <Modal.Footer>
                         <Button variant="secondary" onClick={handleClose}>Close</Button>
-                        <Button variant="primary" onClick={() => this.EditBrand()}>Save Changes</Button>
+                        <Button variant="primary" disabled={btnDisable} onClick={() => this.EditBrand()}>Save Changes</Button>
                     </Modal.Footer>
                 </Modal>
             </>
@@ -636,8 +643,8 @@ class Brands extends React.Component {
 
     DetailsForm() {
         const { showDetails, selectedBrand } = this.state;
-        const { name, email, contact, contactPerson, address, regID, taxID, smtpIntegration, smsApiKey, senderID, sendName } = selectedBrand
-
+        const { name, email, contact, contactPerson, address, regID, taxID, smtpIntegration, smsApiKey, senderID, sendName, smsCount, emailCount, notificationCount } = selectedBrand
+        debugger
         const handleClose = () => this.setState({ showDetails: false });
         return (
             <>
@@ -724,7 +731,21 @@ class Brands extends React.Component {
                                         </div>
                                     </Col>
                                 </Row>
+                                <Row>
+                                    <Col md="6">
+                                        <div className="detailsContainer">
+                                            <label className="Title">SMS Sender ID:</label>
+                                            <label className="subTitle">{senderID ? senderID : "No value"}</label>
+                                        </div>
+                                    </Col>
 
+                                    <Col md="6">
+                                        <div className="detailsContainer">
+                                            <label className="Title">Send Name:</label>
+                                            <label className="subTitle">{sendName ? sendName : "No value"}</label>
+                                        </div>
+                                    </Col>
+                                </Row>
 
                                 <Row>
                                     <Col>
@@ -747,24 +768,31 @@ class Brands extends React.Component {
                                         </div>
                                     </Col>
                                 </Row>
+
+
                                 <Row>
-                                    <Col md="6">
+                                    <Col md="4">
                                         <div className="detailsContainer">
-                                            <label className="Title">Sender ID:</label>
-                                            <label className="subTitle">{senderID ? senderID : "No value"}</label>
+                                            <label className="Title">Push Notification Count:</label>
+                                            <label className="subTitle">{notificationCount}</label>
                                         </div>
                                     </Col>
 
-                                    <Col md="6">
+                                    <Col md="4">
                                         <div className="detailsContainer">
-                                            <label className="Title">Send Name:</label>
-                                            <label className="subTitle">{sendName ? sendName : "No value"}</label>
+                                            <label className="Title">Email Count:</label>
+                                            <label className="subTitle">{emailCount}</label>
                                         </div>
                                     </Col>
-
+                                    <Col md="4">
+                                        <div className="detailsContainer">
+                                            <label className="Title">SMS Count:</label>
+                                            <label className="subTitle">{smsCount}</label>
+                                        </div>
+                                    </Col>
                                 </Row>
-
                             </Form>
+
                         </CardBody>
 
                     </Modal.Body>
@@ -779,16 +807,15 @@ class Brands extends React.Component {
 
     EditBrand() {
         const { selectedBrand, selectedBrandIndex, Brands } = this.state;
-        const { storeProfile } = this.props;
+        const { StoreBrands } = this.props;
         this.setState({ showEdit: false });
         let res = selectedBrand;
         HtttpPutDefult('brand/' + selectedBrand._id + '', res, true).then((res) => {
             if (res) {
                 Brands[selectedBrandIndex] = selectedBrand;
-                this.setState({ Brands: Brands });
-                StoreBrands(Brands)
+                this.setState({ Brands: Brands, editMode: false });
+                StoreBrands(Brands);
                 displayToast('Brand data is updated successfully', true);
-                this.setState({ editMode: false })
             }
         })
     }
