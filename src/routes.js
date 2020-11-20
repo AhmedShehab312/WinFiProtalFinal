@@ -37,6 +37,7 @@ const Packages = React.lazy(() => import('./Demo/Packages/Packages'));
 
 
 const routes = [
+    { path: '/', exact: true, name: 'Default', component: DashboardDefault },
     { path: '/dashboard', exact: true, name: 'Default', component: DashboardDefault },
     { path: '/basic/button', exact: true, name: 'Basic Button', component: UIBasicButton },
     { path: '/basic/badges', exact: true, name: 'Basic Badges', component: UIBasicBadges },
