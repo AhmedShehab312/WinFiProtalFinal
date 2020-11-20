@@ -1073,6 +1073,8 @@ class Branches extends React.Component {
                                     showActiveIcon
                                     showDelete
                                     noResultMSG={"There is no available branches"}
+                                    addMSG={"add new branch"}
+
 
                                 />
                             </Col>

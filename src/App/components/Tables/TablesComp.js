@@ -186,7 +186,7 @@ class TableData extends React.Component {
     }
 
     EnhancedTable() {
-        const { handleDelete, handleDetails, handleEdit, showDelete, Title, handleAdd, data, showActiveIcon, ActiveAction, deActiveAction, noResultMSG } = this.props;
+        const { handleDelete, handleDetails, handleEdit, showDelete, Title, handleAdd, data, showActiveIcon, ActiveAction, deActiveAction, noResultMSG, addMSG } = this.props;
         const { rows } = this.state;
         console.log(data);
         const classes = {
@@ -243,7 +243,7 @@ class TableData extends React.Component {
                         </Col>
                         <Col md="6">
                             <div className="btnContainer">
-                                {handleAdd && <Button variant="contained" onClick={() => handleAdd()}> <i className="fas fa-plus" /> New Record</Button>}
+                                {handleAdd && <Button variant="contained" onClick={() => handleAdd()}> <i className="fas fa-plus" /> {addMSG}</Button>}
                                 {/* <Dropdown>
                                     <Dropdown.Toggle variant="success" id="dropdown-basic"><i className="fa fa-download" /><p className="ExportTxt">Export Table</p></Dropdown.Toggle>
                                     <Dropdown.Menu>

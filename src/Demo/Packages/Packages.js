@@ -531,6 +531,8 @@ class Packages extends React.Component {
                                 handleAdd={() => { this.Add() }}
                                 showDelete
                                 noResultMSG={"There is no available packages"}
+                                addMSG={"add new package"}
+
                             />
                         </Col>
                     </Row>

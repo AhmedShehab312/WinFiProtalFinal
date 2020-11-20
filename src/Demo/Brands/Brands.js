@@ -897,6 +897,7 @@ class Brands extends React.Component {
                                 showActiveIcon
                                 showDelete
                                 noResultMSG={"There is no available brands"}
+                                addMSG={"add new brand"}
                             />
 
                         </Col>
