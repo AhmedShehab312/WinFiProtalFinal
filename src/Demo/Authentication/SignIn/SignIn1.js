@@ -21,7 +21,6 @@ class SignUp1 extends React.Component {
             saveCredentials: false,
             showPassword: false,
             type: "password"
-
         }
 
     }

@@ -186,9 +186,8 @@ class TableData extends React.Component {
     }
 
     EnhancedTable() {
-        const { handleDelete, handleDetails, handleEdit, showDelete, Title, handleAdd, data, showActiveIcon, ActiveAction, deActiveAction, noResultMSG, addMSG } = this.props;
+        const { handleDelete, handleDetails, handleEdit, showDelete, Title, handleAdd, data, showActiveIcon, ActiveAction, deActiveAction, noResultMSG, addMSG, handlePay } = this.props;
         const { rows } = this.state;
-        console.log(data);
         const classes = {
             root: {
                 width: '100%',
@@ -340,6 +339,8 @@ class TableData extends React.Component {
                                                         {showDelete && <i className="fas fa-trash-alt" onClick={() => { this.deleteAction(data[index], index) }} />}
                                                         {handleDetails && <i className="far fa-list-alt" onClick={() => { handleDetails(data[index], index) }} data-toggle="tooltip" data-placement="top" title="Show Details" />}
                                                         {handleEdit && <i className="fas fa-edit" onClick={() => { handleEdit(data[index], index) }} data-toggle="tooltip" data-placement="top" title="Edit" />}
+                                                        {handlePay && <i className="fas fa-money-bill-alt" onClick={() => { handlePay(data[index], index) }} data-toggle="tooltip" data-placement="top" title="Pay" />}
+
                                                     </TableCell>
                                                 </TableRow>
                                             );

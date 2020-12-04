@@ -1,7 +1,6 @@
 import React from 'react';
 import { Row, Col, Button, Modal, Form } from 'react-bootstrap';
-import { CardBody } from 'reactstrap';
-import { InputWithText } from '../../App/components/ComponentModule'
+import { InputWithText, DropDown } from '../../App/components/ComponentModule'
 import Aux from "../../hoc/_Aux";
 import TableData from '../../App/components/Tables/TablesComp';
 import './BrandsStyle.scss';
@@ -10,6 +9,12 @@ import { HtttpGetDefult, HtttpPostDefult, HtttpPutDefult } from '../../actions/h
 import { connect } from 'react-redux';
 import { displayToast } from '../../globals/globals';
 import { StoreBrands } from '../../store/actions/BrandsAction';
+import DatePicker from "react-datepicker";
+import moment from 'moment'
+import {
+    CardBody,
+    FormGroup
+} from 'reactstrap';
 
 
 class Brands extends React.Component {
@@ -34,7 +39,12 @@ class Brands extends React.Component {
             btnDisable: true,
             EditArr: [],
             btnDisableAdd: true,
-            AddArr: []
+            AddArr: [],
+            showPay: false,
+            newPay: [],
+            AddPay: [],
+            selectedBranch: null,
+            PayBtnDisable: true
 
         }
     }
@@ -346,6 +356,29 @@ class Brands extends React.Component {
 
     }
 
+
+    async changeAddInputPay(Input, val) {
+        switch (Input) {
+            case 'amount':
+                this.setState({
+                    newPay: {
+                        ...this.state.newPay,
+                        amount: val
+                    }
+                })
+                break;
+            case 'Date':
+                this.checkAddPayValidation('1', val ? true : false)
+                this.setState({
+                    newPay: {
+                        ...this.state.newPay,
+                        Date: val
+                    }
+                })
+                break;
+        }
+    }
+
     delete(Item, key) {
         const { Brands } = this.state;
         const { StoreBrands } = this.props;
@@ -382,6 +415,16 @@ class Brands extends React.Component {
                 }
             }
         });
+    }
+
+    Pay(Item) {
+        HtttpGetDefult('brand/' + Item._id + '').then(async (res) => {
+            await this.setState({ Branches: res.branches, showPay: true })
+            setTimeout(
+                () => this.setState({ Branches: res.branches, showPay: true }),
+                10
+            );
+        })
     }
 
     AddForm() {
@@ -479,6 +522,35 @@ class Brands extends React.Component {
                 </Modal>
             </>
         );
+    }
+
+    checkAddPayValidation(index, val) {
+        const { AddPay } = this.state;
+        let updatedArr;
+        updatedArr = AddPay;
+        updatedArr[index] = val;
+        this.setState({ AddPay: updatedArr })
+        this.checkDisableOrEnableBtnAddPay(2, AddPay);
+    }
+
+
+    checkDisableOrEnableBtnAddPay(num, arr) {
+        let result;
+        console.log(arr)
+        if (arr.length == num) {
+            result = arr.filter((Item) => {
+                return Item
+            });
+            if (result.length != num) {
+                this.setState({ PayBtnDisable: true })
+            }
+            else {
+                this.setState({ PayBtnDisable: false })
+            }
+        }
+        else {
+            this.setState({ PayBtnDisable: true })
+        }
     }
 
     checkEditValidation(index, val) {
@@ -871,14 +943,74 @@ class Brands extends React.Component {
         })
     }
 
+    selectedBranch(val) {
+        this.setState({ selectedBranch: val });
+    }
+
+    submitPay() {
+        this.setState({ showPay: false, newPay: [], PayBtnDisable: true })
+        displayToast('Payment processed successfully done', false);
+
+    }
+
+    AddPayForm() {
+        const { showPay, selectedBranch, PayBtnDisable, newPay, Branches, AddPay } = this.state;
+        const { amount, Date } = newPay;
+        const handleClose = () => this.setState({ showPay: false, newPay: [], PayBtnDisable: true });
+        return (
+            <>
+                <Modal show={showPay} onHide={handleClose} dialogClassName="modal-80w">
+                    <Modal.Header closeButton>
+                        <Modal.Title>Add new Payment</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <CardBody>
+                            <Form>
+                                <Row>
+                                    <Col md={4}>
+                                        <InputWithText type="text" label={"Amount"} placeholder={"Enter the amount"} value={amount} isRequired validation="number" onChange={(val) => this.changeAddInputPay("amount", val)} onBlur={(val) => { this.checkAddPayValidation('0', val) }} />
+                                    </Col>
+                                    <Col md={4}>
+                                        <label className="Title">Pay Date:</label>
+                                        <div>
+                                            <DatePicker className="DatePicker" selected={Date ? moment(Date).toDate() : null} onChange={date => this.changeAddInputPay('Date', moment(date).format('DD-MMM-YYYY'))} onBlur={(val) => { this.checkAddPayValidation('1', val.target.value ? true : false) }} />
+                                            <i class="fas fa-calendar-alt"></i>
+                                            {!AddPay[1] && <label style={{ color: '#ea6464', marginLeft: '10px', fontSize: '12px' }}>This field is required</label>}
+                                        </div>
+                                    </Col>
+                                    <Col md={4}>
+                                        <FormGroup className="dropDownContainer">
+                                            <label className="title">Branches</label>
+                                            <DropDown label={"Branches"} items={Branches} onClick={(val) => { this.selectedBranch(val) }} selctedItem={selectedBranch} />
+                                            {!selectedBranch && <label style={{ color: '#ea6464', marginLeft: '10px', fontSize: '12px' }}>This field is required</label>}
+                                        </FormGroup>
+                                    </Col>
+
+                                </Row>
+                            </Form>
+
+                        </CardBody>
+                    </Modal.Body>
+
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={handleClose}>Close</Button>
+                        <Button variant="primary" disabled={PayBtnDisable} onClick={() => this.submitPay()}>Pay</Button>
+                    </Modal.Footer>
+                </Modal>
+            </>
+        );
+
+    }
+
     render() {
-        const { Brands, showAdd, showDetails, showEdit } = this.state;
+        const { Brands, showAdd, showDetails, showEdit, showPay } = this.state;
         return (
             <Aux>
                 <div className="Brands">
                     {showAdd && this.AddForm()}
                     {showEdit && this.EditForm()}
                     {showDetails && this.DetailsForm()}
+                    {showPay && this.AddPayForm()}
                     <Row>
                         <Col md="12">
 
@@ -898,6 +1030,7 @@ class Brands extends React.Component {
                                 showDelete
                                 noResultMSG={"There is no available brands"}
                                 addMSG={"add new brand"}
+                                handlePay={(val, index) => { this.Pay(val, index) }}
                             />
 
                         </Col>
