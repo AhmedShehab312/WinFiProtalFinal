@@ -15,6 +15,7 @@ import {
     CardBody,
     FormGroup
 } from 'reactstrap';
+import { PhotoshopPicker } from 'react-color';
 
 
 class Brands extends React.Component {
@@ -34,7 +35,8 @@ class Brands extends React.Component {
                     port: "",
                     username: "",
                     password: ""
-                }
+                },
+                displayColor: '#22194D'
             },
             btnDisable: true,
             EditArr: [],
@@ -44,7 +46,9 @@ class Brands extends React.Component {
             newPay: [],
             AddPay: [],
             selectedBranch: null,
-            PayBtnDisable: true
+            PayBtnDisable: true,
+            displayColorPicker: false
+
 
         }
     }
@@ -219,6 +223,32 @@ class Brands extends React.Component {
                     }
                 })
                 break;
+            case 'Color':
+                this.setState({
+                    newBrand: {
+                        ...this.state.newBrand,
+                        displayColor: val
+                    }
+                })
+                break;
+            case 'description':
+                this.setState({
+                    newBrand: {
+                        ...this.state.newBrand,
+                        displayDesc: val
+                    }
+                })
+                break;
+
+
+            case 'title':
+                this.setState({
+                    newBrand: {
+                        ...this.state.newBrand,
+                        displayName: val
+                    }
+                })
+                break;
         }
 
     }
@@ -352,8 +382,51 @@ class Brands extends React.Component {
                     }
                 })
                 break;
+            case 'title':
+                this.setState({
+                    selectedBrand: {
+                        ...this.state.selectedBrand,
+                        displayName: val
+                    }
+                })
+                break;
+            case 'description':
+                this.setState({
+                    selectedBrand: {
+                        ...this.state.selectedBrand,
+                        displayDesc: val
+                    }
+                })
+                break;
         }
 
+    }
+
+    handleChangeComplete = (color) => {
+        this.setState({
+            newBrand: {
+                ...this.state.newBrand,
+                displayColor: color.hex
+            }
+        })
+
+        this.checkAddValidation('15', color.hex)
+    };
+
+    handleChangeCompleteEdit = (color) => {
+        this.setState({
+            selectedBrand: {
+                ...this.state.selectedBrand,
+                displayColor: color.hex
+            }
+        })
+
+    };
+
+
+
+    handleClosePicker(type) {
+        this.setState({ displayColorPicker: false })
     }
 
 
@@ -429,7 +502,7 @@ class Brands extends React.Component {
 
     AddForm() {
         const { showAdd, newBrand, btnDisableAdd } = this.state;
-        const { name, email, contact, contactPerson, address, regID, taxID, smtpIntegration, smsApiKey, senderID, sendName, password } = newBrand;
+        const { name, email, contact, contactPerson, address, regID, taxID, smtpIntegration, smsApiKey, senderID, sendName, password, displayName, displayDesc, displayColor } = newBrand;
         const handleClose = () => this.setState({ showAdd: false });
         return (
             <>
@@ -500,16 +573,58 @@ class Brands extends React.Component {
                                 </Row>
 
                                 <Row>
-                                    <Col md={6}>
+                                    <Col md={4}>
                                         <InputWithText type="text" label={"SMS Api Key"} placeholder={"Enter SMS Api Key"} onChange={(val) => this.changeAddInput("smsApiKey", val)} value={smsApiKey} isRequired onBlur={(val) => { this.checkAddValidation('11', val) }} />
                                     </Col>
-                                    <Col md={6}>
+                                    <Col md={4}>
                                         <InputWithText type="text" label={"SMS Sender ID"} placeholder={"Enter SMS Sender ID"} onChange={(val) => this.changeAddInput("senderID", val)} value={senderID} validation="number" isRequired onBlur={(val) => { this.checkAddValidation('12', val) }} />
                                     </Col>
-                                    <Col md={6}>
+                                    <Col md={4}>
                                         <InputWithText type="text" label={"Send Name"} placeholder={"Enter Send Name"} onChange={(val) => this.changeAddInput("sendName", val)} value={sendName} isRequired onBlur={(val) => { this.checkAddValidation('13', val) }} />
                                     </Col>
                                 </Row>
+
+                                <Row>
+                                    <Col md={6}>
+                                        <InputWithText type="text" label={"Brand Title"} placeholder={"Enter the brand title"} onChange={(val) => this.changeAddInput("title", val)} value={displayName} isRequired onBlur={(val) => { this.checkAddValidation('16', val) }} />
+                                    </Col>
+                                    <Col md={6}>
+                                        <InputWithText type="text" label={"Brand Description"} placeholder={"Enter the brand description"} onChange={(val) => this.changeAddInput("description", val)} value={displayDesc} isRequired onBlur={(val) => { this.checkAddValidation('17', val) }} />
+                                    </Col>
+                                </Row>
+                                <Row style={{ display: 'flex', width: '80%', margin: 'auto', marginTop: 20, marginBottom: 20 }}>
+                                    <div className="colorSchemaPart1">
+                                        <label className="Title">Pick your color schema:</label>
+                                        <div className="pickColorOutter" onClick={() => { this.setState({ displayColorPicker: true }) }}>
+                                            <div className={"pickColorInner"} style={{ background: displayColor }}></div>
+                                        </div>
+                                        {
+                                            this.state.displayColorPicker &&
+                                            <PhotoshopPicker
+                                                color={displayColor}
+                                                onChangeComplete={this.handleChangeComplete}
+                                                onCancel={(color) => this.handleClosePicker(color, 'close')}
+                                                onAccept={(color) => this.handleClosePicker(color, 'accept')}
+                                            />
+                                        }
+                                    </div>
+                                    <div className="colorSchemaPart2">
+                                        <div className="Container">
+                                            <Row className="Row" style={{ borderColor: displayColor }}>
+                                                <Col md="4" className="Left" style={{ background: displayColor }}>
+                                                    <p className="showTitle">{displayName}</p>
+                                                    <p className="showDesc">{displayDesc}</p>
+                                                </Col>
+                                                <Col md="6" className="Right">
+                                                    <p className="NumberTxt">Phone</p>
+                                                    <div className="Number" style={{ borderColor: displayColor }}></div>
+                                                    <Button style={{ background: displayColor }}>Connect</Button>
+                                                </Col>
+                                            </Row>
+                                        </div>
+                                    </div>
+                                </Row>
+
                             </Form>
 
                         </CardBody>
@@ -554,13 +669,12 @@ class Brands extends React.Component {
     }
 
     checkEditValidation(index, val) {
-
         const { EditArr } = this.state;
         let updatedArr;
         updatedArr = EditArr;
         updatedArr[index] = val;
         this.setState({ EditArr: updatedArr })
-        this.checkDisableOrEnableBtnEdit(14, EditArr);
+        this.checkDisableOrEnableBtnEdit(16, EditArr);
 
     }
 
@@ -586,13 +700,12 @@ class Brands extends React.Component {
 
 
     checkAddValidation(index, val) {
-
         const { AddArr } = this.state;
         let updatedArr;
         updatedArr = AddArr;
         updatedArr[index] = val;
         this.setState({ AddArr: updatedArr })
-        this.checkDisableOrEnableBtnAdd(15, AddArr);
+        this.checkDisableOrEnableBtnAdd(18, AddArr);
 
     }
 
@@ -618,7 +731,7 @@ class Brands extends React.Component {
 
     EditForm() {
         const { showEdit, selectedBrand, btnDisable } = this.state;
-        const { name, email, contact, contactPerson, address, regID, taxID, smtpIntegration, smsApiKey, senderID, sendName, password } = selectedBrand
+        const { name, email, contact, contactPerson, address, regID, taxID, smtpIntegration, smsApiKey, senderID, sendName, password, displayColor, displayName, displayDesc } = selectedBrand
 
         const handleClose = () => this.setState({ showEdit: false });
         return (
@@ -689,16 +802,57 @@ class Brands extends React.Component {
                                 </Row>
 
                                 <Row>
-                                    <Col md={6}>
+                                    <Col md={4}>
                                         <InputWithText type="text" label={"SMS Api Key"} placeholder={"Enter SMS Api Key"} onChange={(val) => this.changeEditInput("smsApiKey", val)} value={smsApiKey} isRequired onBlur={(val) => { this.checkEditValidation('11', val) }} />
                                     </Col>
-                                    <Col md={6}>
+                                    <Col md={4}>
                                         <InputWithText type="text" label={"Sender ID"} placeholder={"Enter SMS Sender ID"} onChange={(val) => this.changeEditInput("senderID", val)} value={senderID} validation="number" isRequired onBlur={(val) => { this.checkEditValidation('12', val) }} />
                                     </Col>
-                                    <Col md={6}>
+                                    <Col md={4}>
                                         <InputWithText type="text" label={"Send Name"} placeholder={"Enter Send Name"} onChange={(val) => this.changeEditInput("sendName", val)} value={sendName} isRequired onBlur={(val) => { this.checkEditValidation('13', val) }} />
                                     </Col>
                                 </Row>
+                                <Row>
+                                    <Col md={6}>
+                                        <InputWithText type="text" label={"Brand Title"} placeholder={"Enter the brand title"} onChange={(val) => this.changeEditInput("title", val)} value={displayName} isRequired onBlur={(val) => { this.checkEditValidation('14', val) }} />
+                                    </Col>
+                                    <Col md={6}>
+                                        <InputWithText type="text" label={"Brand Description"} placeholder={"Enter the brand description"} onChange={(val) => this.changeEditInput("description", val)} value={displayDesc} isRequired onBlur={(val) => { this.checkEditValidation('15', val) }} />
+                                    </Col>
+                                </Row>
+                                <Row style={{ marginTop: 20, display: 'flex', width: '80%', margin: 'auto', marginTop: 20, marginBottom: 20 }}>
+                                    <div className="colorSchemaPart1">
+                                        <label className="Title">Pick your color schema:</label>
+                                        <div className="pickColorOutter" onClick={() => { this.setState({ displayColorPicker: true }) }}>
+                                            <div className={"pickColorInner"} style={{ background: displayColor }}></div>
+                                        </div>
+                                        {
+                                            this.state.displayColorPicker &&
+                                            <PhotoshopPicker
+                                                color={displayColor}
+                                                onChangeComplete={this.handleChangeCompleteEdit}
+                                                onCancel={(color) => this.handleClosePicker(color, 'close')}
+                                                onAccept={(color) => this.handleClosePicker(color, 'accept')}
+                                            />
+                                        }
+                                    </div>
+                                    <div className="colorSchemaPart2">
+                                        <div className="Container">
+                                            <Row className="Row" style={{ borderColor: displayColor }}>
+                                                <Col md="4" className="Left" style={{ background: displayColor }}>
+                                                    <p className="showTitle">{displayName}</p>
+                                                    <p className="showDesc">{displayDesc}</p>
+                                                </Col>
+                                                <Col md="6" className="Right">
+                                                    <p className="NumberTxt">Phone</p>
+                                                    <div className="Number" style={{ borderColor: displayColor }}></div>
+                                                    <Button style={{ background: displayColor }}>Connect</Button>
+                                                </Col>
+                                            </Row>
+                                        </div>
+                                    </div>
+                                </Row>
+
                             </Form>
 
                         </CardBody>
@@ -715,8 +869,8 @@ class Brands extends React.Component {
 
     DetailsForm() {
         const { showDetails, selectedBrand } = this.state;
-        const { name, email, contact, contactPerson, address, regID, taxID, smtpIntegration, smsApiKey, senderID, sendName, smsCount, emailCount, notificationCount } = selectedBrand
-        debugger
+        const { name, email, contact, contactPerson, address, regID, taxID, smtpIntegration, smsApiKey, senderID, sendName, smsCount, emailCount, notificationCount, displayColor, displayDesc, displayName } = selectedBrand
+
         const handleClose = () => this.setState({ showDetails: false });
         return (
             <>
@@ -825,7 +979,6 @@ class Brands extends React.Component {
                                     </Col>
                                 </Row>
 
-
                                 <Row>
                                     <Col md="6">
                                         <div className="detailsContainer">
@@ -860,6 +1013,37 @@ class Brands extends React.Component {
                                         <div className="detailsContainer">
                                             <label className="Title">SMS Count:</label>
                                             <label className="subTitle">{smsCount}</label>
+                                        </div>
+                                    </Col>
+                                </Row>
+
+                                <Row>
+                                    <Col>
+                                        <h3 style={{ marginBottom: '30px', marginTop: '30px' }}>LANDING PAGE CONFIGURATIONS:</h3>
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col md="6">
+                                        <div className="detailsContainer">
+                                            <label className="Title">Title:</label>
+                                            <label className="subTitle">{displayName}</label>
+                                        </div>
+                                    </Col>
+
+                                    <Col md="6">
+                                        <div className="detailsContainer">
+                                            <label className="Title">Color Schema:</label>
+                                            <div className="pickColorOutter">
+                                                <div className={"pickColorInner"} style={{ background: displayColor }}></div>
+                                            </div>
+                                        </div>
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col md="12" style={{ whiteSpace: 'none' }}>
+                                        <div className="detailsContainer">
+                                            <label className="Title">Description:</label>
+                                            <label className="subTitle">{displayDesc}</label>
                                         </div>
                                     </Col>
                                 </Row>
@@ -1013,7 +1197,6 @@ class Brands extends React.Component {
                     {showPay && this.AddPayForm()}
                     <Row>
                         <Col md="12">
-
                             <TableData
                                 headCells={this.headCells}
                                 data={Brands}

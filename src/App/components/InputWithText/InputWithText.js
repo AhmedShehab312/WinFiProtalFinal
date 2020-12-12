@@ -103,14 +103,14 @@ class InputWithText extends React.Component {
     }
 
     render() {
-        const { label, value = null, placeholder, onChange, disabled, onBlur, validation, isRequired = true } = this.props;
+        const { label, value = null, placeholder, onChange, disabled, onBlur, validation, isRequired = true, onFoucs } = this.props;
         const { type, showPassword } = this.state;
 
         return (
             <FormGroup>
                 <label style={{ color: '#000' }}>{label}</label>
                 <Input style={this.state.errorMsg ? { borderColor: '#ea6464' } : null} type={type} placeholder={placeholder} onChange={onChange ? (val) => { onChange(val.target.value); } : null} disabled={disabled}
-                    defaultValue={value ? value : null} onBlur={(val) => { this.validationFunc(val.target.value, validation, isRequired) }} />
+                    defaultValue={value ? value : null} onBlur={(val) => { this.validationFunc(val.target.value, validation, isRequired) }} onFocus={onFoucs ? () => onFoucs() : null} />
                 {
                     validation == "password" && <i class={showPassword ? "fas fa-eye" : "fas fa-eye-slash"} style={{ position: 'absolute', top: this.state.errorMsg ? "38%" : '44px', right: '25px', cursor: 'pointer' }} onClick={() => { this.showPassword() }}></i>
                 }
