@@ -73,7 +73,7 @@ class Brands extends React.Component {
     async componentDidMount() {
         const { StoreBrands } = this.props;
         let Result;
-        await HtttpGetDefult('brand/list', true).then((res) => {
+        await HtttpGetDefult('brands', true).then((res) => {
             if (res) {
                 Result = res;
                 StoreBrands(res);
@@ -456,7 +456,7 @@ class Brands extends React.Component {
         const { Brands } = this.state;
         const { StoreBrands } = this.props;
         Brands[key].isDeleted = true;
-        HtttpPutDefult("brand/" + Item._id + "", Brands[key], true).then((res) => {
+        HtttpPutDefult("brands/" + Item._id + "", Brands[key], true).then((res) => {
             if (res) {
                 Brands.splice(key, 1);
                 this.setState({ Brands: Brands })
@@ -491,7 +491,7 @@ class Brands extends React.Component {
     }
 
     Pay(Item) {
-        HtttpGetDefult('brand/' + Item._id + '').then(async (res) => {
+        HtttpGetDefult('brands/' + Item._id + '').then(async (res) => {
             await this.setState({ Branches: res.branches, showPay: true })
             setTimeout(
                 () => this.setState({ Branches: res.branches, showPay: true }),
@@ -1066,7 +1066,7 @@ class Brands extends React.Component {
         const { StoreBrands } = this.props;
         this.setState({ showEdit: false });
         let res = selectedBrand;
-        HtttpPutDefult('brand/' + selectedBrand._id + '', res, true).then((res) => {
+        HtttpPutDefult('brands/' + selectedBrand._id + '', res, true).then((res) => {
             if (res) {
                 Brands[selectedBrandIndex] = selectedBrand;
                 this.setState({ Brands: Brands, editMode: false });
@@ -1085,7 +1085,7 @@ class Brands extends React.Component {
         newBrand.logo = "string";
         newBrand.taxImage = "string";
         newBrand.regImage = "string";
-        HtttpPostDefult("brand/create", newBrand, true).then((res) => {
+        HtttpPostDefult("brands", newBrand, true).then((res) => {
             if (!res.errors) {
                 newBrand._id = res.id;
                 Brands.push(newBrand);
@@ -1103,7 +1103,7 @@ class Brands extends React.Component {
         const { selectedBrandIndex, Brands } = this.state;
         const { StoreBrands } = this.props;
         selectedBrand.isActive = true;
-        HtttpPutDefult("brand/" + selectedBrand._id + "", selectedBrand, true).then((res) => {
+        HtttpPutDefult("brands/" + selectedBrand._id + "", selectedBrand, true).then((res) => {
             if (res) {
                 Brands[selectedBrandIndex] = selectedBrand;
                 this.setState({ Brands: Brands });
@@ -1117,7 +1117,7 @@ class Brands extends React.Component {
         const { selectedBrandIndex, Brands } = this.state;
         const { StoreBrands } = this.props;
         selectedBrand.isActive = false;
-        HtttpPutDefult("brand/" + selectedBrand._id + "", selectedBrand, true).then((res) => {
+        HtttpPutDefult("brands/" + selectedBrand._id + "", selectedBrand, true).then((res) => {
             if (res) {
                 Brands[selectedBrandIndex] = selectedBrand;
                 this.setState({ Brands: Brands });

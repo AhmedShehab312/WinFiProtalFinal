@@ -37,7 +37,7 @@ class Packages extends React.Component {
     async componentDidMount() {
         const { StorePackages } = this.props;
         let Result;
-        await HtttpGetDefult('package/list', true).then((res) => {
+        await HtttpGetDefult('packages', true).then((res) => {
             if (res) {
                 Result = res;
                 StorePackages(res);
@@ -269,7 +269,7 @@ class Packages extends React.Component {
     AddPackage() {
         const { newPackage, Packages } = this.state;
         this.setState({ showAdd: false });
-        HtttpPostDefult('package/create', newPackage).then((res) => {
+        HtttpPostDefult('packages', newPackage).then((res) => {
             if (!res.error) {
                 Packages.push(newPackage)
                 StorePackages(Packages);
@@ -289,7 +289,7 @@ class Packages extends React.Component {
         const { StorePackages } = this.props;
         this.setState({ showEdit: false });
         let res = selectedPackage;
-        HtttpPutDefult('package/' + selectedPackage._id + '', res, true).then((res) => {
+        HtttpPutDefult('packages/' + selectedPackage._id + '', res, true).then((res) => {
             if (res) {
                 Packages[selectedPackageIndex] = selectedPackage;
                 this.setState({ Packages: Packages, editMode: false });
@@ -493,7 +493,7 @@ class Packages extends React.Component {
         const { Packages } = this.state;
         const { StorePackages } = this.props;
         Packages[key].isDeleted = true;
-        HtttpPutDefult("package/" + Item._id + "", Packages[key], true).then((res) => {
+        HtttpPutDefult("packages/" + Item._id + "", Packages[key], true).then((res) => {
             if (res) {
                 Packages.splice(key, 1);
                 this.setState({ Packages: Packages })

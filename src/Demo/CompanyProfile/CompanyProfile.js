@@ -68,7 +68,7 @@ class CompanyProfile extends React.Component {
         const { profileObject } = this.state;
         const { storeProfile } = this.props;
         if (this.checkValidation()) {
-            HtttpPutDefult('brand/1', profileObject).then((res) => {
+            HtttpPutDefult('brands/1', profileObject).then((res) => {
                 if (res) {
                     storeProfile(profileObject);
                     displayToast('Profile data is updated successfully', true);

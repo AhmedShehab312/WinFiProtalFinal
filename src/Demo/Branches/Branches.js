@@ -158,7 +158,7 @@ class Branches extends React.Component {
 
 
     selectedBrand(Item) {
-        HtttpGetDefult('brand/' + Item._id + '').then(async (res) => {
+        HtttpGetDefult('brands/' + Item._id + '').then(async (res) => {
             await this.setState({ Branches: res.branches, selectedBrand: Item })
             setTimeout(
                 () => this.setState({ Branches: res.branches, selectedBrand: Item }),
@@ -351,7 +351,7 @@ class Branches extends React.Component {
         const { Branches } = this.state;
         const { storeBranches } = this.props;
         Branches[key].isDeleted = true;
-        HtttpPutDefult("branch/" + Item._id + "", Branches[key]).then((res) => {
+        HtttpPutDefult("branches/" + Item._id + "", Branches[key]).then((res) => {
             if (res) {
                 Branches.splice(key, 1);
                 this.setState({ Branches: Branches })
@@ -781,7 +781,7 @@ class Branches extends React.Component {
         const { storeBranches } = this.props;
         selectedBranch.accessPoints ? selectedBranch.accessPoints.push(NewAccessPoints) : selectedBranch.accessPoints = [NewAccessPoints];
         this.setState({ showAddAccessPoint: false });
-        HtttpPutDefult("branch/" + selectedBranch._id + "", selectedBranch, true).then((res) => {
+        HtttpPutDefult("branches/" + selectedBranch._id + "", selectedBranch, true).then((res) => {
             if (res) {
                 Branches[selectedBranchIndex] = selectedBranch;
                 this.setState({ Branches: Branches });
@@ -796,7 +796,7 @@ class Branches extends React.Component {
         const { storeBranches } = this.props;
         selectedBranch.accessPoints[SelectedAccessPointsIndex] = SelectedAccessPoints;
         this.setState({ showEditAccessPoint: false });
-        HtttpPutDefult("branch/" + selectedBranch._id + "", selectedBranch, true).then((res) => {
+        HtttpPutDefult("branches/" + selectedBranch._id + "", selectedBranch, true).then((res) => {
             if (res) {
                 Branches[selectedBranchIndex] = selectedBranch;
                 this.setState({ Branches: Branches });
@@ -971,7 +971,7 @@ class Branches extends React.Component {
         selectedBranch.interval = selectedIntervals.name;
         selectedBranch.allowedServices = res.join();
         this.setState({ showEdit: false });
-        HtttpPutDefult("branch/" + selectedBranch._id + "", selectedBranch, true).then((res) => {
+        HtttpPutDefult("branches/" + selectedBranch._id + "", selectedBranch, true).then((res) => {
             if (res) {
                 Branches[selectedBranchIndex] = selectedBranch;
                 this.setState({ Branches: Branches });
@@ -999,7 +999,7 @@ class Branches extends React.Component {
         newBranch.allowedServices = res.join();
         this.resetAllAllowedServices();
 
-        HtttpPostDefult("branch/create", newBranch, true).then((res) => {
+        HtttpPostDefult("branches", newBranch, true).then((res) => {
             if (!res.errors) {
                 newBranch._id = res.id
                 Branches.push(newBranch);
@@ -1017,7 +1017,7 @@ class Branches extends React.Component {
         const { selectedBranchIndex, Branches } = this.state;
         const { storeBranches } = this.props;
         selectedBranch.isActive = true;
-        HtttpPutDefult("branch/" + selectedBranch._id + "", selectedBranch, true).then((res) => {
+        HtttpPutDefult("branches/" + selectedBranch._id + "", selectedBranch, true).then((res) => {
             if (res) {
                 Branches[selectedBranchIndex] = selectedBranch;
                 this.setState({ Branches: Branches });
@@ -1031,7 +1031,7 @@ class Branches extends React.Component {
         const { selectedBranchIndex, Branches } = this.state;
         const { storeBranches } = this.props;
         selectedBranch.isActive = false;
-        HtttpPutDefult("branch/" + selectedBranch._id + "", selectedBranch, true).then((res) => {
+        HtttpPutDefult("branches/" + selectedBranch._id + "", selectedBranch, true).then((res) => {
             if (res) {
                 Branches[selectedBranchIndex] = selectedBranch;
                 this.setState({ Branches: Branches });
