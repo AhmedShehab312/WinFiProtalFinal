@@ -114,7 +114,7 @@ class NavRight extends Component {
                             </Dropdown.Menu>
                         </Dropdown>
                     </li>
-                </ul>
+                </ul> 
                 <ChatList listOpen={this.state.listOpen} closed={() => { this.setState({ listOpen: false }); }} />
             </Aux>
         );
