@@ -13,7 +13,7 @@ const DropDown = ({ label, items, selctedItem, onClick, title }) => {
                 </DropdownToggle>
                 <DropdownMenu>
                     {
-                        items.map((Item, key) => {
+                        items && items.lenght > 0 && items.map((Item, key) => {
                             return <DropdownItem key={key} onClick={() => { onClick(Item) }} active={selctedItem && Item._id == selctedItem._id}>{Item.name}</DropdownItem>
                         })
                     }
